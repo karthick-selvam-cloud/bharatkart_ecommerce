@@ -1,0 +1,11 @@
+CREATE DATABASE ecommerce_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'ecommerce_user'@'localhost' IDENTIFIED BY 'secure_password';
+GRANT ALL PRIVILEGES ON ecommerce_db.* TO 'ecommerce_user'@'localhost';
+FLUSH PRIVILEGES;
+CREATE INDEX idx_product_name ON apps_product(name);
+CREATE INDEX idx_product_price ON apps_product(price);
+CREATE INDEX idx_product_category ON apps_product(category_id);
+CREATE INDEX idx_order_user ON apps_order(user_id);
+CREATE INDEX idx_order_status ON apps_order(status);
+CREATE INDEX idx_cart_item_cart ON apps_cartitem(cart_id);
+CREATE INDEX idx_review_product ON apps_review(product_id);
