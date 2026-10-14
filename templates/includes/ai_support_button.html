@@ -1,0 +1,469 @@
+{% load static %}
+<!-- ============ AI SUPPORT FLOATING BUTTON ============ -->
+<div class="ai-support-widget" id="aiSupportWidget">
+
+    <!-- Chat Preview Popup -->
+    <div class="ai-preview-popup" id="aiPreviewPopup">
+        <div class="ai-preview-header">
+            <div class="ai-preview-avatar">
+                <i class="fas fa-robot"></i>
+                <span class="ai-online-dot"></span>
+            </div>
+            <div class="ai-preview-info">
+                <h6>BharatKart Concierge</h6>
+                <p><i class="fas fa-circle" style="font-size: 0.4rem; color: #22c55e;"></i> Online now</p>
+            </div>
+            <button class="ai-preview-close" onclick="closeAIPreview(event)" title="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ai-preview-body">
+            <p class="ai-preview-message">
+                Namaste! 🙏 I'm your AI concierge. Need help with orders, products, wallet, or anything else?
+            </p>
+            <div class="ai-preview-actions">
+                <button class="ai-preview-btn ai-preview-btn-primary" onclick="openAIChat()">
+                    <i class="fas fa-comments"></i> Start Chat
+                </button>
+                <button class="ai-preview-btn ai-preview-btn-outline" onclick="quickAsk('Track my order')">
+                    Track Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Trigger Button -->
+    <button class="ai-support-trigger" id="aiSupportTrigger" onclick="toggleAIChat()" title="AI Concierge">
+        <span class="ai-trigger-pulse"></span>
+        <span class="ai-trigger-pulse ai-trigger-pulse-2"></span>
+        <div class="ai-trigger-icon">
+            <i class="fas fa-robot ai-icon-robot"></i>
+            <i class="fas fa-times ai-icon-close"></i>
+        </div>
+        <span class="ai-trigger-badge" id="aiTriggerBadge">1</span>
+    </button>
+
+</div>
+
+<style>
+    /* ============ AI SUPPORT WIDGET ============ */
+    .ai-support-widget {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9998;
+        font-family: 'Inter', -apple-system, sans-serif;
+    }
+
+    /* ============ TRIGGER BUTTON ============ */
+    .ai-support-trigger {
+        position: relative;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #c9a961 0%, #a68a4a 100%);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 40px rgba(201,169,97,0.5), 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+        animation: aiTriggerBounce 2s ease-in-out infinite;
+    }
+
+    .ai-support-trigger:hover {
+        transform: scale(1.1) rotate(-8deg);
+        box-shadow: 0 15px 50px rgba(201,169,97,0.65), 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    @keyframes aiTriggerBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-4px); }
+    }
+
+    /* Pulse rings */
+    .ai-trigger-pulse {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px solid #c9a961;
+        opacity: 0;
+        animation: aiPulseRing 2s ease-out infinite;
+        pointer-events: none;
+    }
+
+    .ai-trigger-pulse-2 {
+        animation-delay: 1s;
+    }
+
+    @keyframes aiPulseRing {
+        0% {
+            transform: scale(1);
+            opacity: 0.7;
+        }
+        100% {
+            transform: scale(1.8);
+            opacity: 0;
+        }
+    }
+
+    /* Icon swapping */
+    .ai-trigger-icon {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ai-icon-robot,
+    .ai-icon-close {
+        position: absolute;
+        transition: all 0.4s;
+    }
+
+    .ai-icon-close {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0);
+    }
+
+    .ai-support-widget.active .ai-icon-robot {
+        opacity: 0;
+        transform: rotate(90deg) scale(0);
+    }
+
+    .ai-support-widget.active .ai-icon-close {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+    }
+
+    .ai-support-widget.active .ai-support-trigger {
+        animation: none;
+        background: linear-gradient(135deg, #6b1f2c 0%, #8b2938 100%);
+        box-shadow: 0 10px 40px rgba(107,31,44,0.5);
+    }
+
+    .ai-support-widget.active .ai-trigger-pulse {
+        display: none;
+    }
+
+    /* Badge */
+    .ai-trigger-badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        min-width: 22px;
+        height: 22px;
+        padding: 0 6px;
+        background: linear-gradient(135deg, #d4af37 0%, #a68a4a 100%);
+        color: white;
+        border-radius: 11px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #faf8f3;
+        box-shadow: 0 3px 10px rgba(201,169,97,0.5);
+        animation: aiBadgeBounce 2s infinite;
+    }
+
+    @keyframes aiBadgeBounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+    }
+
+    /* ============ PREVIEW POPUP ============ */
+    .ai-preview-popup {
+        position: absolute;
+        bottom: 84px;
+        right: 0;
+        width: 320px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        overflow: hidden;
+        transform: translateY(20px) scale(0.9);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+        transform-origin: bottom right;
+        border: 1px solid #e8e3d8;
+    }
+
+    .ai-preview-popup.show {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .ai-preview-header {
+        background: linear-gradient(135deg, #1a1a1a 0%, #1a3a2e 100%);
+        color: white;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ai-preview-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(circle, rgba(201,169,97,0.25) 0%, transparent 70%);
+        border-radius: 50%;
+    }
+
+    .ai-preview-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #c9a961 0%, #a68a4a 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+        position: relative;
+        flex-shrink: 0;
+        z-index: 1;
+        box-shadow: 0 6px 18px rgba(201,169,97,0.4);
+    }
+
+    .ai-online-dot {
+        position: absolute;
+        bottom: 1px;
+        right: 1px;
+        width: 12px;
+        height: 12px;
+        background: #22c55e;
+        border-radius: 50%;
+        border: 2px solid #1a1a1a;
+        animation: aiOnlinePulse 2s infinite;
+    }
+
+    @keyframes aiOnlinePulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
+        50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    }
+
+    .ai-preview-info {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+    }
+
+    .ai-preview-info h6 {
+        margin: 0 0 2px;
+        font-family: 'Playfair Display', serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .ai-preview-info p {
+        margin: 0;
+        font-size: 0.72rem;
+        opacity: 0.8;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .ai-preview-close {
+        background: rgba(255,255,255,0.1);
+        border: none;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .ai-preview-close:hover {
+        background: rgba(255,255,255,0.2);
+        transform: rotate(90deg);
+    }
+
+    .ai-preview-body {
+        padding: 18px 20px;
+    }
+
+    .ai-preview-message {
+        font-size: 0.85rem;
+        color: #1a1a1a;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+
+    .ai-preview-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .ai-preview-btn {
+        flex: 1;
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.02em;
+    }
+
+    .ai-preview-btn-primary {
+        background: linear-gradient(135deg, #c9a961 0%, #a68a4a 100%);
+        color: white;
+        box-shadow: 0 6px 18px rgba(201,169,97,0.35);
+    }
+
+    .ai-preview-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(201,169,97,0.5);
+    }
+
+    .ai-preview-btn-outline {
+        background: white;
+        color: #1a1a1a;
+        border: 2px solid #e8e3d8;
+    }
+
+    .ai-preview-btn-outline:hover {
+        border-color: #c9a961;
+        color: #a68a4a;
+        background: #faf8f3;
+    }
+
+    /* ============ MOBILE ============ */
+    @media (max-width: 576px) {
+        .ai-support-widget {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .ai-support-trigger {
+            width: 56px;
+            height: 56px;
+            font-size: 1.3rem;
+        }
+
+        .ai-preview-popup {
+            width: calc(100vw - 40px);
+            right: 0;
+            bottom: 76px;
+            max-width: 340px;
+        }
+    }
+
+    /* ============ AUTO-POPUP TIMING ============ */
+    /* Popup shows automatically after 8 seconds on first visit */
+</style>
+
+<script>
+(function() {
+    // ============ PREVENT AUTO-POPUP SPAM ============
+    const POPUP_SHOWN_KEY = 'bk_ai_popup_shown';
+    const POPUP_DISMISSED_KEY = 'bk_ai_popup_dismissed';
+
+    window.toggleAIChat = function() {
+        const widget = document.getElementById('aiSupportWidget');
+        const popup = document.getElementById('aiPreviewPopup');
+        
+        if (widget.classList.contains('active')) {
+            // Redirect to chat page
+            window.location.href = '/ai/chat/';
+        } else {
+            // Show preview popup
+            widget.classList.add('active');
+            popup.classList.add('show');
+            hideBadge();
+        }
+    };
+
+    window.closeAIPreview = function(event) {
+        if (event) event.stopPropagation();
+        const widget = document.getElementById('aiSupportWidget');
+        const popup = document.getElementById('aiPreviewPopup');
+        widget.classList.remove('active');
+        popup.classList.remove('show');
+        sessionStorage.setItem(POPUP_DISMISSED_KEY, 'true');
+    };
+
+    window.openAIChat = function() {
+        window.location.href = '/ai/chat/';
+    };
+
+    window.quickAsk = function(question) {
+        // Save the question in session storage to auto-send on chat page
+        sessionStorage.setItem('bk_ai_quick_ask', question);
+        window.location.href = '/ai/chat/';
+    };
+
+    function hideBadge() {
+        const badge = document.getElementById('aiTriggerBadge');
+        if (badge) badge.style.display = 'none';
+    }
+
+    // ============ CLICK OUTSIDE TO CLOSE ============
+    document.addEventListener('click', function(e) {
+        const widget = document.getElementById('aiSupportWidget');
+        if (!widget) return;
+        
+        if (!widget.contains(e.target)) {
+            const popup = document.getElementById('aiPreviewPopup');
+            if (popup && popup.classList.contains('show')) {
+                widget.classList.remove('active');
+                popup.classList.remove('show');
+            }
+        }
+    });
+
+    // ============ AUTO-SHOW PREVIEW AFTER 8 SECONDS (once per session) ============
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const dismissed = sessionStorage.getItem(POPUP_DISMISSED_KEY);
+            const shown = sessionStorage.getItem(POPUP_SHOWN_KEY);
+            const widget = document.getElementById('aiSupportWidget');
+            const popup = document.getElementById('aiPreviewPopup');
+            
+            if (!dismissed && !shown && widget && popup) {
+                widget.classList.add('active');
+                popup.classList.add('show');
+                sessionStorage.setItem(POPUP_SHOWN_KEY, 'true');
+                hideBadge();
+            }
+        }, 8000);
+    });
+
+    // ============ HIDE BADGE WHEN ON CHAT PAGE ============
+    window.addEventListener('load', function() {
+        if (window.location.pathname.includes('/ai/chat/')) {
+            hideBadge();
+        }
+    });
+
+})();
+</script>

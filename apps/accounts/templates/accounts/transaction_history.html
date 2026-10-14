@@ -1,0 +1,71 @@
+{% extends 'base_luxury.html' %}
+{% block title %}Transaction History — BharatKart{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <div class="page-hero-content" data-aos="fade-up">
+            <div class="section-eyebrow" style="color: var(--gold);">
+                <i class="fas fa-history"></i> Complete History
+            </div>
+            <h1 class="page-hero-title">
+                All <span class="gold-text">Transactions</span>
+            </h1>
+            <p class="page-hero-subtitle">
+                Every credit and debit on your BharatKart balance
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid var(--border-light);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-light);">
+            <div>
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin: 0;">
+                    Current Balance: <span style="color: var(--gold-dark);">₹{{ wallet.balance }}</span>
+                </h3>
+            </div>
+            <a href="{% url 'accounts:wallet' %}" class="btn-luxury btn-luxury-outline">
+                <i class="fas fa-arrow-left"></i> Back to Wallet
+            </a>
+        </div>
+
+        {% if transactions %}
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            {% for txn in transactions %}
+            <div style="display: flex; align-items: center; gap: 16px; padding: 18px; background: var(--ivory); border-radius: 16px;">
+                <div style="width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+                    {% if txn.is_credit %}background: rgba(26,58,46,0.1); color: var(--dark-green);
+                    {% else %}background: rgba(107,31,44,0.1); color: var(--burgundy);{% endif %}">
+                    <i class="fas {% if txn.is_credit %}fa-plus{% else %}fa-minus{% endif %}"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; font-size: 0.95rem;">{{ txn.description }}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-secondary);">
+                        {{ txn.created_at|date:"F d, Y — g:i A" }}
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; 
+                        {% if txn.is_credit %}color: var(--dark-green);{% else %}color: var(--burgundy);{% endif %}">
+                        {% if txn.is_credit %}+{% else %}-{% endif %}₹{{ txn.amount }}
+                    </div>
+                    <div style="font-size: 0.7rem; color: var(--text-muted);">
+                        Balance: ₹{{ txn.balance_after }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 60px 20px;">
+            <i class="fas fa-receipt" style="font-size: 3rem; color: var(--gold); opacity: 0.5;"></i>
+            <h4 style="font-family: 'Playfair Display', serif; margin: 20px 0 8px;">No Transactions</h4>
+            <p style="color: var(--text-secondary);">Your transaction history is empty</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

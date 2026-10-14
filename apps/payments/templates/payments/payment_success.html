@@ -1,0 +1,43 @@
+{% extends 'base_luxury.html' %}
+{% block title %}Payment Success — BharatKart{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="min-height: 60vh; display: flex; align-items: center;">
+    <div style="text-align: center; width: 100%;" data-aos="zoom-in">
+        <div style="width: 140px; height: 140px; margin: 0 auto 32px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; box-shadow: 0 30px 80px rgba(201,169,97,0.4);">
+            <i class="fas fa-check"></i>
+        </div>
+        
+        <div class="section-eyebrow">Payment Successful</div>
+        <h1 class="section-title">Thank <span class="gold-text">You</span></h1>
+        <p class="section-subtitle" style="margin-bottom: 32px;">
+            Your order <strong>#{{ order.order_number }}</strong> has been confirmed.<br>
+            A confirmation email has been sent to <strong>{{ order.user.email }}</strong>
+        </p>
+        
+        <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid var(--border-light); max-width: 500px; margin: 32px auto; text-align: left;">
+            <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-light);">
+                <span style="color: var(--text-secondary);">Order Number</span>
+                <span style="font-weight: 700;">#{{ order.order_number }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-light);">
+                <span style="color: var(--text-secondary);">Amount Paid</span>
+                <span style="font-weight: 700;">₹{{ order.total }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 12px 0;">
+                <span style="color: var(--text-secondary);">Status</span>
+                <span style="font-weight: 700; color: var(--dark-green);">Confirmed</span>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'orders:detail' order.id %}" class="btn-luxury btn-luxury-primary">
+                <i class="fas fa-receipt"></i> <span>View Order</span>
+            </a>
+            <a href="{% url 'products:list' %}" class="btn-luxury btn-luxury-outline">
+                <i class="fas fa-shopping-bag"></i> <span>Continue Shopping</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,942 @@
+{% extends 'base_luxury.html' %}
+{% load static %}
+{% block title %}Edit Profile — BharatKart{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============ PROFILE PAGE SPECIFIC ============ */
+    .profile-hero {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a3a2e 100%);
+        padding: 70px 0 100px;
+        position: relative;
+        overflow: hidden;
+        color: var(--ivory);
+    }
+
+    .profile-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 30%, rgba(201,169,97,0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(107,31,44,0.2) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .profile-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(201,169,97,0.03) 35px, rgba(201,169,97,0.03) 36px);
+        pointer-events: none;
+    }
+
+    .profile-hero-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        flex-wrap: wrap;
+    }
+
+    .profile-avatar-large {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        font-weight: 700;
+        box-shadow: 0 20px 60px rgba(201,169,97,0.4);
+        position: relative;
+        border: 4px solid rgba(250,248,243,0.15);
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .profile-avatar-large img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profile-avatar-large::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #22c55e;
+        border: 3px solid var(--charcoal);
+    }
+
+    .profile-hero-text {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .profile-hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--gold);
+        font-size: 0.7rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 12px;
+        padding: 8px 18px;
+        border: 1px solid rgba(201,169,97,0.3);
+        border-radius: 50px;
+        background: rgba(201,169,97,0.05);
+    }
+
+    .profile-hero-name {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+    }
+
+    .profile-hero-name .gold-text {
+        background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-style: italic;
+    }
+
+    .profile-hero-meta {
+        color: rgba(250,248,243,0.7);
+        font-size: 0.9rem;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .profile-hero-meta span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .profile-hero-meta i { color: var(--gold); }
+
+    /* ============ MAIN LAYOUT ============ */
+    .profile-main {
+        padding: 0 0 80px;
+        margin-top: -60px;
+        position: relative;
+        z-index: 5;
+    }
+
+    .profile-layout {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 30px;
+    }
+
+    /* ============ SIDEBAR ============ */
+    .profile-sidebar {
+        background: white;
+        border-radius: 24px;
+        padding: 20px;
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-md);
+        height: fit-content;
+        position: sticky;
+        top: 120px;
+    }
+
+    .sidebar-user {
+        text-align: center;
+        padding: 20px 16px 24px;
+        border-bottom: 1px solid var(--border-light);
+        margin-bottom: 12px;
+    }
+
+    .sidebar-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 auto 16px;
+        box-shadow: var(--shadow-gold);
+        overflow: hidden;
+    }
+
+    .sidebar-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .sidebar-user h5 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .sidebar-user p {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        margin: 0;
+    }
+
+    .sidebar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar-item { margin-bottom: 4px; }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-radius: 12px;
+        color: var(--charcoal);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: var(--transition);
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: left;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    .sidebar-link i {
+        width: 20px;
+        text-align: center;
+        color: var(--gold-dark);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .sidebar-link:hover {
+        background: var(--cream);
+        color: var(--gold-dark);
+    }
+
+    .sidebar-link.active {
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        color: white;
+        box-shadow: var(--shadow-gold);
+    }
+
+    .sidebar-link.active i { color: white; }
+
+    .sidebar-link.danger { color: var(--burgundy); }
+    .sidebar-link.danger i { color: var(--burgundy); }
+    .sidebar-link.danger:hover { background: rgba(107,31,44,0.08); }
+
+    /* ============ CONTENT CARDS ============ */
+    .profile-card {
+        background: white;
+        border-radius: 24px;
+        padding: 36px;
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 24px;
+    }
+
+    .profile-card-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 28px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .profile-card-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--cream) 0%, var(--ivory) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold-dark);
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+
+    .profile-card-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .profile-card-subtitle {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        margin: 4px 0 0;
+    }
+
+    /* ============ AVATAR UPLOAD ============ */
+    .avatar-upload-section {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding: 24px;
+        background: var(--ivory);
+        border-radius: 18px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+    }
+
+    .avatar-preview {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        box-shadow: var(--shadow-gold);
+        overflow: hidden;
+        flex-shrink: 0;
+        border: 3px solid white;
+    }
+
+    .avatar-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .avatar-actions {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .avatar-actions h6 {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .avatar-actions p {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+    }
+
+    /* ============ FORM FIELDS ============ */
+    .luxury-field {
+        margin-bottom: 22px;
+    }
+
+    .luxury-label {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+
+    .luxury-input-wrap { position: relative; }
+
+    .luxury-input {
+        width: 100%;
+        padding: 14px 46px 14px 18px;
+        border: 2px solid var(--border-light);
+        border-radius: 12px;
+        background: white;
+        font-size: 0.9rem;
+        font-family: 'Inter', sans-serif;
+        color: var(--charcoal);
+        transition: var(--transition);
+    }
+
+    .luxury-input::placeholder { color: var(--text-muted); }
+
+    .luxury-input:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 4px rgba(201,169,97,0.1);
+    }
+
+    .luxury-input:disabled {
+        background: var(--cream);
+        color: var(--text-muted);
+        cursor: not-allowed;
+    }
+
+    .luxury-input-icon {
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        pointer-events: none;
+        transition: var(--transition);
+    }
+
+    .luxury-input:focus ~ .luxury-input-icon { color: var(--gold); }
+
+    .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    select.luxury-input {
+        appearance: none;
+        padding-right: 46px;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236c6c6c' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 18px center;
+    }
+
+    /* ============ BUTTONS ============ */
+    .btn-luxury {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        transition: var(--transition);
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .btn-luxury-primary {
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        color: white;
+        box-shadow: var(--shadow-gold);
+    }
+
+    .btn-luxury-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.6s;
+    }
+
+    .btn-luxury-primary:hover::before { left: 100%; }
+
+    .btn-luxury-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 50px rgba(201,169,97,0.4);
+        color: white;
+    }
+
+    .btn-luxury-outline {
+        background: transparent;
+        color: var(--charcoal);
+        border: 2px solid var(--border-light);
+    }
+
+    .btn-luxury-outline:hover {
+        border-color: var(--gold);
+        color: var(--gold-dark);
+        background: var(--cream);
+    }
+
+    .btn-luxury-sm {
+        padding: 10px 20px;
+        font-size: 0.75rem;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding-top: 24px;
+        border-top: 1px solid var(--border-light);
+        margin-top: 8px;
+    }
+
+    /* ============ STATS MINI ============ */
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .mini-stat {
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        border: 1px solid var(--border-light);
+        transition: var(--transition);
+    }
+
+    .mini-stat:hover {
+        transform: translateY(-4px);
+        border-color: var(--gold);
+        box-shadow: var(--shadow-md);
+    }
+
+    .mini-stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--cream) 0%, var(--ivory) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold-dark);
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .mini-stat-value {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--charcoal);
+        margin-bottom: 4px;
+    }
+
+    .mini-stat-label {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 992px) {
+        .profile-layout { grid-template-columns: 1fr; }
+        .profile-sidebar { position: static; }
+        .field-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 576px) {
+        .profile-hero-content { flex-direction: column; text-align: center; }
+        .profile-hero-meta { justify-content: center; }
+        .profile-card { padding: 24px 20px; }
+        .avatar-upload-section { flex-direction: column; text-align: center; }
+        .form-actions { flex-direction: column; }
+        .form-actions .btn-luxury { width: 100%; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ============ PROFILE HERO ============ -->
+<section class="profile-hero">
+    <div class="container">
+        <div class="profile-hero-content" data-aos="fade-up">
+            <div class="profile-avatar-large">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }}">
+                {% else %}
+                    {{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}
+                {% endif %}
+            </div>
+            <div class="profile-hero-text">
+                <div class="profile-hero-eyebrow">
+                    <i class="fas fa-crown"></i>
+                    <span>Premium Member</span>
+                </div>
+                <h1 class="profile-hero-name">
+                    {{ user.first_name|default:user.username }}<br>
+                    <span class="gold-text">{{ user.last_name|default:"Profile" }}</span>
+                </h1>
+                <div class="profile-hero-meta">
+                    <span><i class="fas fa-envelope"></i> {{ user.email }}</span>
+                    {% if user.phone %}
+                    <span><i class="fas fa-phone"></i> {{ user.phone }}</span>
+                    {% endif %}
+                    <span><i class="fas fa-calendar"></i> Joined {{ user.date_joined|date:"M Y" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ MAIN ============ -->
+<section class="profile-main">
+    <div class="container">
+        <div class="profile-layout">
+
+            <!-- Sidebar -->
+            <aside class="profile-sidebar" data-aos="fade-right">
+                <div class="sidebar-user">
+                    <div class="sidebar-avatar">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }}">
+                        {% else %}
+                            {{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}
+                        {% endif %}
+                    </div>
+                    <h5>{{ user.first_name }} {{ user.last_name }}</h5>
+                    <p>{{ user.email }}</p>
+                </div>
+
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item">
+                        <a href="{% url 'accounts:dashboard' %}" class="sidebar-link">
+                            <i class="fas fa-th-large"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'accounts:profile' %}" class="sidebar-link active">
+                            <i class="fas fa-user-edit"></i> <span>Edit Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'orders:list' %}" class="sidebar-link">
+                            <i class="fas fa-box"></i> <span>My Orders</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'wishlist:detail' %}" class="sidebar-link">
+                            <i class="fas fa-heart"></i> <span>Wishlist</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'accounts:addresses' %}" class="sidebar-link">
+                            <i class="fas fa-map-marker-alt"></i> <span>Addresses</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'accounts:wallet' %}" class="sidebar-link">
+                            <i class="fas fa-wallet"></i> <span>Balance</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                            <i class="fas fa-lock"></i> <span>Change Password</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'accounts:logout' %}" class="sidebar-link danger">
+                            <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <div data-aos="fade-left">
+
+                <!-- Mini Stats -->
+                <div class="stats-row">
+                    <div class="mini-stat">
+                        <div class="mini-stat-icon"><i class="fas fa-box"></i></div>
+                        <div class="mini-stat-value">{{ user.orders.count|default:"0" }}</div>
+                        <div class="mini-stat-label">Orders</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-icon"><i class="fas fa-heart"></i></div>
+                        <div class="mini-stat-value">{{ wishlist_count|default:"0" }}</div>
+                        <div class="mini-stat-label">Wishlist</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-icon"><i class="fas fa-wallet"></i></div>
+                        <div class="mini-stat-value">₹{{ wallet_balance|default:"0" }}</div>
+                        <div class="mini-stat-label">Balance</div>
+                    </div>
+                </div>
+
+                <!-- Profile Form -->
+                <form method="post" enctype="multipart/form-data" action="{% url 'accounts:profile' %}">
+                    {% csrf_token %}
+
+                    <!-- Avatar Upload -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <div class="profile-card-icon"><i class="fas fa-camera"></i></div>
+                            <div>
+                                <h3 class="profile-card-title">Profile Picture</h3>
+                                <p class="profile-card-subtitle">Upload a photo to personalize your account</p>
+                            </div>
+                        </div>
+
+                        <div class="avatar-upload-section">
+                            <div class="avatar-preview" id="avatarPreview">
+                                {% if user.profile_picture %}
+                                    <img src="{{ user.profile_picture.url }}" alt="{{ user.first_name }}">
+                                {% else %}
+                                    {{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}
+                                {% endif %}
+                            </div>
+                            <div class="avatar-actions">
+                                <h6>Choose an image</h6>
+                                <p>JPG, PNG or GIF. Max size 2MB.</p>
+                                <label for="profilePictureInput" class="btn-luxury btn-luxury-outline btn-luxury-sm" style="cursor: pointer;">
+                                    <i class="fas fa-upload"></i> <span>Upload New</span>
+                                </label>
+                                <input type="file" id="profilePictureInput" name="profile_picture" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Info -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <div class="profile-card-icon"><i class="fas fa-user"></i></div>
+                            <div>
+                                <h3 class="profile-card-title">Personal Information</h3>
+                                <p class="profile-card-subtitle">Keep your details up to date</p>
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="luxury-field">
+                                <label class="luxury-label">First Name</label>
+                                <div class="luxury-input-wrap">
+                                    <input type="text" name="first_name" class="luxury-input"
+                                           value="{{ user.first_name }}" placeholder="John" required>
+                                    <i class="fas fa-user luxury-input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="luxury-field">
+                                <label class="luxury-label">Last Name</label>
+                                <div class="luxury-input-wrap">
+                                    <input type="text" name="last_name" class="luxury-input"
+                                           value="{{ user.last_name }}" placeholder="Doe" required>
+                                    <i class="fas fa-user luxury-input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="luxury-field">
+                                <label class="luxury-label">Email Address</label>
+                                <div class="luxury-input-wrap">
+                                    <input type="email" class="luxury-input" value="{{ user.email }}" disabled>
+                                    <i class="fas fa-envelope luxury-input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="luxury-field">
+                                <label class="luxury-label">Phone Number</label>
+                                <div class="luxury-input-wrap">
+                                    <input type="tel" name="phone" class="luxury-input"
+                                           value="{{ user.phone }}" placeholder="+91 98765 43210">
+                                    <i class="fas fa-phone luxury-input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="luxury-field">
+                                <label class="luxury-label">Gender</label>
+                                <div class="luxury-input-wrap">
+                                    <select name="gender" class="luxury-input">
+                                        <option value="">Select Gender</option>
+                                        <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Male</option>
+                                        <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Female</option>
+                                        <option value="other" {% if user.gender == 'other' %}selected{% endif %}>Other</option>
+                                    </select>
+                                    <i class="fas fa-venus-mars luxury-input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="luxury-field">
+                                <label class="luxury-label">Date of Birth</label>
+                                <div class="luxury-input-wrap">
+                                    <input type="date" name="date_of_birth" class="luxury-input"
+                                           value="{{ user.date_of_birth|date:'Y-m-d' }}">
+                                    <i class="fas fa-calendar luxury-input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <div class="profile-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h3 class="profile-card-title">Shipping Address</h3>
+                                <p class="profile-card-subtitle">Where should we deliver your orders?</p>
+                            </div>
+                        </div>
+
+                        <div class="luxury-field">
+                            <label class="luxury-label">Address Line 1</label>
+                            <div class="luxury-input-wrap">
+                                <input type="text" name="address_line1" class="luxury-input"
+                                       value="{{ user.address_line1 }}" placeholder="Street address, building name">
+                                <i class="fas fa-home luxury-input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="luxury-field">
+                            <label class="luxury-label">Address Line 2</label>
+                            <div class="luxury-input-wrap">
+                                <input type="text" name="address_line2" class="luxury-input"
+                                       value="{{ user.address_line2 }}" placeholder="Apartment, suite, floor (optional)">
+                                <i class="fas fa-building luxury-input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="luxury-field">
+                                <label class="luxury-label">City</label>
+                                <div class="luxury-input-wrap">
+                                    <input type="text" name="city" class="luxury-input"
+                                           value="{{ user.city }}" placeholder="Mumbai">
+                                    <i class="fas fa-city luxury-input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="luxury-field">
+                                <label class="luxury-label">State</label>
+                                <div class="luxury-input-wrap">
+                                    <input type="text" name="state" class="luxury-input"
+                                           value="{{ user.state }}" placeholder="Maharashtra">
+                                    <i class="fas fa-map luxury-input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="luxury-field">
+                                <label class="luxury-label">Pincode</label>
+                                <div class="luxury-input-wrap">
+                                    <input type="text" name="pincode" class="luxury-input"
+                                           value="{{ user.pincode }}" placeholder="400001" maxlength="6">
+                                    <i class="fas fa-mail-bulk luxury-input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="luxury-field"></div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-luxury btn-luxury-primary">
+                            <i class="fas fa-check"></i>
+                            <span>Save Changes</span>
+                        </button>
+                        <a href="{% url 'accounts:dashboard' %}" class="btn-luxury btn-luxury-outline">
+                            <i class="fas fa-times"></i>
+                            <span>Cancel</span>
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ CHANGE PASSWORD MODAL ============ -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 24px; border: none; overflow: hidden;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #1a1a1a 0%, #1a3a2e 100%); color: white; border: none; padding: 24px 32px;">
+                <div>
+                    <h5 class="modal-title" style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0;">
+                        Change <span style="color: #c9a961; font-style: italic;">Password</span>
+                    </h5>
+                    <p style="margin: 6px 0 0; opacity: 0.7; font-size: 0.85rem;">Update your account password</p>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" action="{% url 'accounts:change_password' %}">
+                {% csrf_token %}
+                <div class="modal-body" style="padding: 32px;">
+                    <div class="luxury-field">
+                        <label class="luxury-label">Current Password</label>
+                        <div class="luxury-input-wrap">
+                            <input type="password" name="old_password" class="luxury-input" required>
+                            <i class="fas fa-lock luxury-input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="luxury-field">
+                        <label class="luxury-label">New Password</label>
+                        <div class="luxury-input-wrap">
+                            <input type="password" name="new_password" class="luxury-input" required>
+                            <i class="fas fa-key luxury-input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="luxury-field" style="margin-bottom: 0;">
+                        <label class="luxury-label">Confirm New Password</label>
+                        <div class="luxury-input-wrap">
+                            <input type="password" name="confirm_password" class="luxury-input" required>
+                            <i class="fas fa-key luxury-input-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none; padding: 0 32px 32px; display: flex; gap: 12px;">
+                    <button type="button" class="btn-luxury btn-luxury-outline" data-bs-dismiss="modal" style="flex: 1;">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn-luxury btn-luxury-primary" style="flex: 1;">
+                        <i class="fas fa-check"></i> <span>Update</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Live preview for avatar upload
+document.getElementById('profilePictureInput')?.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const preview = document.getElementById('avatarPreview');
+            preview.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Auto-format phone input
+document.querySelector('input[name="phone"]')?.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 10) value = value.substring(0, 10);
+    e.target.value = value;
+});
+</script>
+{% endblock %}

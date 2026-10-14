@@ -1,0 +1,293 @@
+﻿{% extends 'base_luxury.html' %}
+{% load static %}
+
+{% block title %}Order #{{ order.order_number }} — BharatKart{% endblock %}
+
+{% block extra_css %}
+<style>
+    .order-hero {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a3a2e 100%);
+        padding: 60px 0 100px;
+        position: relative;
+        overflow: hidden;
+        color: var(--ivory);
+    }
+    .order-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 30%, rgba(201,169,97,0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(107,31,44,0.2) 0%, transparent 50%);
+    }
+    .order-hero-content { position: relative; z-index: 2; }
+    .order-hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 12px;
+    }
+    .order-hero-title .gold-text {
+        background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-style: italic;
+    }
+    .order-content { margin-top: -60px; position: relative; z-index: 5; }
+    .timeline-card, .info-card {
+        background: white;
+        border-radius: 24px;
+        padding: 28px;
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 24px;
+    }
+    .timeline-card { box-shadow: var(--shadow-md); }
+    .info-card-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border-light);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .info-card-title i { color: var(--gold); }
+    .timeline-steps { display: flex; justify-content: space-between; position: relative; margin-top: 30px; }
+    .timeline-steps::before {
+        content: ''; position: absolute; top: 22px; left: 40px; right: 40px;
+        height: 3px; background: var(--border-light); z-index: 0;
+    }
+    .timeline-step {
+        position: relative; z-index: 1; display: flex; flex-direction: column;
+        align-items: center; text-align: center; flex: 1;
+    }
+    .timeline-dot {
+        width: 44px; height: 44px; border-radius: 50%; background: white;
+        border: 3px solid var(--border-light); display: flex; align-items: center;
+        justify-content: center; color: var(--text-muted); font-size: 1rem;
+        margin-bottom: 12px; transition: all 0.4s;
+    }
+    .timeline-step.completed .timeline-dot {
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        border-color: var(--gold); color: white; box-shadow: var(--shadow-gold);
+    }
+    .timeline-step.active .timeline-dot {
+        background: white; border-color: var(--gold); color: var(--gold-dark);
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,97,0.4); }
+        50% { box-shadow: 0 0 0 12px rgba(201,169,97,0); }
+    }
+    .timeline-label {
+        font-size: 0.7rem; font-weight: 600; color: var(--text-secondary);
+        letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .timeline-step.completed .timeline-label, .timeline-step.active .timeline-label {
+        color: var(--gold-dark);
+    }
+    .info-row {
+        display: flex; justify-content: space-between; padding: 12px 0;
+        border-bottom: 1px dashed var(--border-light); font-size: 0.9rem;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-row .label { color: var(--text-secondary); font-weight: 500; }
+    .info-row .value { color: var(--charcoal); font-weight: 600; text-align: right; }
+    .order-item-row {
+        display: flex; gap: 16px; padding: 18px; background: var(--ivory);
+        border-radius: 16px; margin-bottom: 12px; align-items: center;
+        border: 1px solid transparent; transition: var(--transition);
+    }
+    .order-item-row:hover {
+        background: white; border-color: var(--gold); box-shadow: var(--shadow-sm);
+    }
+    .order-item-img {
+        width: 80px; height: 80px; border-radius: 14px; background: white;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--gold); font-size: 1.5rem; overflow: hidden; flex-shrink: 0;
+        border: 2px solid var(--border-light);
+    }
+    .order-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .order-item-info { flex: 1; }
+    .order-item-name {
+        font-family: 'Playfair Display', serif; font-size: 1rem;
+        font-weight: 600; margin-bottom: 4px;
+    }
+    .order-item-meta { font-size: 0.8rem; color: var(--text-secondary); }
+    .order-item-price {
+        font-family: 'Playfair Display', serif; font-size: 1.15rem;
+        font-weight: 700; color: var(--gold-dark);
+    }
+    .summary-total {
+        padding: 20px 0; margin-top: 16px; border-top: 2px solid var(--gold);
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .summary-total .label {
+        font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700;
+    }
+    .summary-total .value {
+        font-family: 'Playfair Display', serif; font-size: 1.5rem;
+        font-weight: 700; color: var(--gold-dark);
+    }
+    .status-badge {
+        padding: 6px 14px; border-radius: 50px; font-size: 0.7rem;
+        font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        display: inline-flex; align-items: center; gap: 6px;
+    }
+    .status-pending { background: rgba(201,169,97,0.15); color: var(--gold-dark); }
+    .status-confirmed { background: rgba(33,150,243,0.12); color: #1565c0; }
+    .status-processing { background: rgba(255,152,0,0.15); color: #e65100; }
+    .status-shipped { background: rgba(103,58,183,0.12); color: #4527a0; }
+    .status-out_for_delivery { background: rgba(0,188,212,0.15); color: #00838f; }
+    .status-delivered { background: rgba(26,58,46,0.12); color: var(--dark-green); }
+    .status-cancelled { background: rgba(107,31,44,0.12); color: var(--burgundy); }
+    @media (max-width: 768px) {
+        .timeline-steps { flex-direction: column; gap: 24px; }
+        .timeline-steps::before {
+            top: 20px; bottom: 20px; left: 22px; right: auto; width: 3px; height: auto;
+        }
+        .timeline-step { flex-direction: row; text-align: left; gap: 16px; }
+        .timeline-dot { margin-bottom: 0; flex-shrink: 0; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="order-hero">
+    <div class="container">
+        <div class="order-hero-content" data-aos="fade-up">
+            <div class="section-eyebrow" style="color: var(--gold);">
+                <i class="fas fa-receipt"></i> Order Details
+            </div>
+            <h1 class="order-hero-title">Order <span class="gold-text">#{{ order.order_number }}</span></h1>
+            <p style="color: rgba(250,248,243,0.7); font-weight: 300;">
+                <i class="fas fa-calendar" style="color: var(--gold);"></i> {{ order.created_at|date:"F d, Y" }} · 
+                <i class="fas fa-clock" style="color: var(--gold);"></i> {{ order.created_at|date:"g:i A" }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="container order-content" style="padding-bottom: 80px;">
+
+    {% if order.status != 'cancelled' %}
+    <div class="timeline-card" data-aos="fade-up">
+        <h3 class="info-card-title" style="border: none; padding: 0; margin-bottom: 8px;">
+            <i class="fas fa-route"></i> Order Tracking
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">
+            {% if order.tracking_number %}Tracking: <strong>{{ order.tracking_number }}</strong>{% else %}Tracking will appear once shipped{% endif %}
+        </p>
+        <div class="timeline-steps">
+            <div class="timeline-step {% if order.status != 'pending' %}completed{% else %}active{% endif %}">
+                <div class="timeline-dot"><i class="fas fa-check"></i></div>
+                <div class="timeline-label">Order Placed</div>
+            </div>
+            <div class="timeline-step {% if order.status == 'confirmed' %}active{% elif order.status == 'processing' or order.status == 'shipped' or order.status == 'out_for_delivery' or order.status == 'delivered' %}completed{% endif %}">
+                <div class="timeline-dot"><i class="fas fa-check-double"></i></div>
+                <div class="timeline-label">Confirmed</div>
+            </div>
+            <div class="timeline-step {% if order.status == 'processing' %}active{% elif order.status == 'shipped' or order.status == 'out_for_delivery' or order.status == 'delivered' %}completed{% endif %}">
+                <div class="timeline-dot"><i class="fas fa-cog"></i></div>
+                <div class="timeline-label">Processing</div>
+            </div>
+            <div class="timeline-step {% if order.status == 'shipped' %}active{% elif order.status == 'out_for_delivery' or order.status == 'delivered' %}completed{% endif %}">
+                <div class="timeline-dot"><i class="fas fa-shipping-fast"></i></div>
+                <div class="timeline-label">Shipped</div>
+            </div>
+            <div class="timeline-step {% if order.status == 'out_for_delivery' %}active{% elif order.status == 'delivered' %}completed{% endif %}">
+                <div class="timeline-dot"><i class="fas fa-truck"></i></div>
+                <div class="timeline-label">Out for Delivery</div>
+            </div>
+            <div class="timeline-step {% if order.status == 'delivered' %}completed{% endif %}">
+                <div class="timeline-dot"><i class="fas fa-home"></i></div>
+                <div class="timeline-label">Delivered</div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="info-card" data-aos="fade-up">
+                <h3 class="info-card-title">
+                    <i class="fas fa-box-open"></i> Order Items ({{ order.items.count }})
+                </h3>
+                {% for item in order.items.all %}
+                <div class="order-item-row">
+                    <div class="order-item-img">
+                        {% if item.product.get_main_image %}
+                            <img src="{{ item.product.get_main_image }}" alt="{{ item.product_name }}">
+                        {% else %}
+                            <i class="fas fa-image"></i>
+                        {% endif %}
+                    </div>
+                    <div class="order-item-info">
+                        <div class="order-item-name">{{ item.product_name }}</div>
+                        <div class="order-item-meta">Quantity: {{ item.quantity }}</div>
+                    </div>
+                    <div class="order-item-price">₹{{ item.total_price }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="info-card-title"><i class="fas fa-receipt"></i> Summary</h3>
+                <div class="info-row"><span class="label">Subtotal</span><span class="value">₹{{ order.subtotal }}</span></div>
+                <div class="info-row"><span class="label">GST</span><span class="value">₹{{ order.gst }}</span></div>
+                <div class="info-row"><span class="label">Shipping</span><span class="value" style="color: var(--dark-green);">FREE</span></div>
+                <div class="summary-total">
+                    <span class="label">Total</span>
+                    <span class="value">₹{{ order.total }}</span>
+                </div>
+            </div>
+
+            <div class="info-card" data-aos="fade-up" data-aos-delay="150">
+                <h3 class="info-card-title"><i class="fas fa-credit-card"></i> Payment</h3>
+                <div class="info-row">
+                    <span class="label">Status</span>
+                    <span class="value">
+                        <span class="status-badge status-{% if order.payment_status == 'paid' %}delivered{% else %}pending{% endif %}" style="font-size: 0.65rem; padding: 4px 10px;">
+                            {{ order.payment_status|title }}
+                        </span>
+                    </span>
+                </div>
+                {% if order.payment_method %}
+                <div class="info-row"><span class="label">Method</span><span class="value">{{ order.payment_method|title }}</span></div>
+                {% endif %}
+            </div>
+
+            <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="info-card-title"><i class="fas fa-map-marker-alt"></i> Shipping To</h3>
+                <div style="font-size: 0.9rem; line-height: 1.7;">
+                    <div style="font-weight: 700; margin-bottom: 4px;">{{ order.user.first_name }} {{ order.user.last_name }}</div>
+                    <div style="color: var(--text-secondary);">
+                        {% if order.user.address_line1 %}
+                            {{ order.user.address_line1 }}<br>
+                            {{ order.user.city }}{% if order.user.city %}, {% endif %}{{ order.user.state }} {{ order.user.pincode }}
+                        {% else %}Address not available{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;" data-aos="fade-up" data-aos-delay="250">
+                {% if order.payment_status != 'paid' and order.status != 'cancelled' %}
+                <a href="{% url 'payments:page' order.id %}" class="btn-luxury btn-luxury-primary" style="width: 100%;">
+                    <i class="fas fa-credit-card"></i> <span>Complete Payment</span>
+                </a>
+                {% endif %}
+                <a href="{% url 'accounts:my_orders' %}" class="btn-luxury btn-luxury-outline" style="width: 100%;">
+                    <i class="fas fa-arrow-left"></i> <span>Back to Orders</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

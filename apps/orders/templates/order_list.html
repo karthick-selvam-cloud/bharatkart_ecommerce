@@ -1,0 +1,251 @@
+{% extends 'base_luxury.html' %}
+{% load static %}
+
+{% block title %}My Orders — BharatKart{% endblock %}
+
+{% block extra_css %}
+<style>
+    .orders-hero {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a3a2e 100%);
+        padding: 60px 0 100px;
+        position: relative;
+        overflow: hidden;
+        color: var(--ivory);
+    }
+
+    .orders-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 20% 30%, rgba(201,169,97,0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(107,31,44,0.2) 0%, transparent 50%);
+    }
+
+    .orders-hero-content { position: relative; z-index: 2; }
+
+    .orders-hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 12px;
+    }
+
+    .orders-hero-title .gold-text {
+        background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-style: italic;
+    }
+
+    .order-list-card {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .order-list-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--gold);
+    }
+
+    .order-list-header {
+        padding: 20px 24px;
+        background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);
+        border-bottom: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .order-list-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--charcoal);
+    }
+
+    .order-list-date {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+
+    .order-status-badge {
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .status-pending { background: rgba(201,169,97,0.15); color: var(--gold-dark); }
+    .status-confirmed { background: rgba(33,150,243,0.12); color: #1565c0; }
+    .status-processing { background: rgba(255,152,0,0.15); color: #e65100; }
+    .status-shipped { background: rgba(103,58,183,0.12); color: #4527a0; }
+    .status-out_for_delivery { background: rgba(0,188,212,0.15); color: #00838f; }
+    .status-delivered { background: rgba(26,58,46,0.12); color: var(--dark-green); }
+    .status-cancelled { background: rgba(107,31,44,0.12); color: var(--burgundy); }
+
+    .order-list-body {
+        padding: 20px 24px;
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .order-list-total {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--gold-dark);
+    }
+
+    .order-list-label {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .btn-luxury {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.78rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        transition: var(--transition);
+        border: none;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        text-decoration: none;
+    }
+
+    .btn-luxury-primary {
+        background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(201,169,97,0.3);
+    }
+
+    .btn-luxury-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-gold);
+        color: white;
+    }
+
+    .empty-orders {
+        text-align: center;
+        padding: 80px 20px;
+        background: white;
+        border-radius: 24px;
+        border: 2px dashed var(--border-light);
+    }
+
+    .empty-orders-icon {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 24px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--cream) 0%, var(--ivory) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: var(--gold);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="orders-hero">
+    <div class="container">
+        <div class="orders-hero-content" data-aos="fade-up">
+            <div class="section-eyebrow" style="color: var(--gold);">
+                <i class="fas fa-box"></i> Order History
+            </div>
+            <h1 class="orders-hero-title">My <span class="gold-text">Orders</span></h1>
+            <p style="color: rgba(250,248,243,0.7); font-weight: 300;">
+                Review and track all your luxury purchases
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="container" style="padding-bottom: 80px; margin-top: -60px; position: relative; z-index: 5;">
+    {% if orders %}
+    <div class="row g-3">
+        {% for order in orders %}
+        <div class="col-12" data-aos="fade-up">
+            <div class="order-list-card">
+                <div class="order-list-header">
+                    <div>
+                        <div class="order-list-number">#{{ order.order_number }}</div>
+                        <div class="order-list-date">
+                            <i class="fas fa-calendar" style="color: var(--gold);"></i>
+                            {{ order.created_at|date:"F d, Y" }} · {{ order.created_at|date:"g:i A" }}
+                        </div>
+                    </div>
+                    <span class="order-status-badge status-{{ order.status }}">
+                        {{ order.get_status_display }}
+                    </span>
+                </div>
+
+                <div class="order-list-body">
+                    <div>
+                        <div class="order-list-label">Items</div>
+                        <div style="font-weight: 600; font-size: 1.1rem;">{{ order.items.count }}</div>
+                    </div>
+                    <div>
+                        <div class="order-list-label">Payment</div>
+                        <div style="font-weight: 600;">{{ order.payment_status|title }}</div>
+                    </div>
+                    <div>
+                        <div class="order-list-label">Total</div>
+                        <div class="order-list-total">₹{{ order.total }}</div>
+                    </div>
+                    <a href="{% url 'orders:detail' order.id %}" class="btn-luxury btn-luxury-primary">
+                        <i class="fas fa-eye"></i>
+                        <span>View Details</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-orders" data-aos="fade-up">
+        <div class="empty-orders-icon"><i class="fas fa-shopping-bag"></i></div>
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 12px;">No Orders Yet</h3>
+        <p style="color: var(--text-secondary); max-width: 420px; margin: 0 auto 24px;">
+            Your luxury journey starts with your first order. Explore our collections and start shopping.
+        </p>
+        <a href="{% url 'products:list' %}" class="btn-luxury btn-luxury-primary">
+            <i class="fas fa-gem"></i>
+            <span>Explore Collections</span>
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

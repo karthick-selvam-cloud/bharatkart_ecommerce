@@ -1,0 +1,816 @@
+/* ============================================================
+   BHARATKART LUXURY ADMIN THEME
+   Matches homepage design — Gold + Charcoal + Ivory
+   ============================================================ */
+
+:root {
+    --gold: #c9a961;
+    --gold-light: #e0c88d;
+    --gold-dark: #a68a4a;
+    --charcoal: #1a1a1a;
+    --charcoal-light: #2a2a2a;
+    --ivory: #faf8f3;
+    --cream: #f5f0e6;
+    --dark-green: #1a3a2e;
+    --burgundy: #6b1f2c;
+    --text-secondary: #6c6c6c;
+    --border-light: #e8e3d8;
+    --shadow-gold: 0 10px 40px rgba(201,169,97,0.25);
+    --transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+/* ============ BODY BACKGROUND ============ */
+body {
+    background: var(--ivory) !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+}
+
+/* ============ NAVBAR ============ */
+.main-header.navbar {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a3a2e 100%) !important;
+    border-bottom: 1px solid rgba(201,169,97,0.2) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.main-header.navbar .nav-link,
+.main-header.navbar .navbar-brand {
+    color: var(--ivory) !important;
+    transition: var(--transition);
+}
+
+.main-header.navbar .nav-link:hover {
+    color: var(--gold) !important;
+}
+
+/* Brand */
+.brand-link {
+    border-bottom: 1px solid rgba(201,169,97,0.15) !important;
+    background: transparent !important;
+    padding: 20px 15px !important;
+}
+
+.brand-link .brand-image {
+    box-shadow: var(--shadow-gold) !important;
+}
+
+.brand-text {
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--ivory) !important;
+    font-size: 1.35rem !important;
+}
+
+.brand-text span {
+    color: var(--gold) !important;
+}
+
+/* ============ SIDEBAR ============ */
+.main-sidebar {
+    background: linear-gradient(180deg, #1a1a1a 0%, #232323 100%) !important;
+    border-right: 1px solid rgba(201,169,97,0.15) !important;
+}
+
+.sidebar {
+    background: transparent !important;
+}
+
+.nav-sidebar .nav-link {
+    color: rgba(250,248,243,0.75) !important;
+    border-radius: 10px !important;
+    margin: 4px 12px !important;
+    padding: 12px 16px !important;
+    transition: var(--transition) !important;
+    font-size: 0.9rem;
+}
+
+.nav-sidebar .nav-link:hover {
+    background: rgba(201,169,97,0.1) !important;
+    color: var(--gold) !important;
+    transform: translateX(4px);
+}
+
+.nav-sidebar .nav-link.active {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+    color: white !important;
+    box-shadow: var(--shadow-gold) !important;
+}
+
+.nav-sidebar .nav-link.active .nav-icon {
+    color: white !important;
+}
+
+.nav-sidebar .nav-icon {
+    color: var(--gold) !important;
+    margin-right: 12px;
+    font-size: 0.95rem;
+}
+
+.nav-sidebar .nav-header {
+    color: var(--gold) !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.25em !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    padding: 20px 24px 8px !important;
+    opacity: 0.9;
+}
+
+.nav-sidebar .nav-treeview .nav-link {
+    padding-left: 32px !important;
+    font-size: 0.85rem !important;
+    color: rgba(250,248,243,0.6) !important;
+}
+
+.nav-sidebar .nav-treeview .nav-link:hover {
+    color: var(--gold) !important;
+}
+
+/* ============ CONTENT AREA ============ */
+.content-wrapper {
+    background: var(--ivory) !important;
+}
+
+.content-header {
+    padding: 24px 24px 16px !important;
+}
+
+.content-header h1 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.9rem !important;
+    font-weight: 700 !important;
+    color: var(--charcoal) !important;
+    letter-spacing: -0.02em;
+}
+
+.breadcrumb {
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 0.85rem;
+}
+
+.breadcrumb-item a {
+    color: var(--gold-dark) !important;
+    font-weight: 500;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--gold) !important;
+}
+
+.breadcrumb-item.active {
+    color: var(--text-secondary) !important;
+}
+
+/* ============ CARDS ============ */
+.card {
+    border: 1px solid var(--border-light) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04) !important;
+    transition: var(--transition);
+    background: white !important;
+}
+
+.card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08) !important;
+}
+
+.card-header {
+    background: white !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    padding: 20px 24px !important;
+    border-radius: 16px 16px 0 0 !important;
+}
+
+.card-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    color: var(--charcoal) !important;
+    letter-spacing: -0.01em;
+}
+
+.card-body { padding: 24px !important; }
+
+/* ============ INFO BOXES (Dashboard) ============ */
+.info-box {
+    border-radius: 16px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06) !important;
+    border: 1px solid var(--border-light) !important;
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+}
+
+.info-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s;
+}
+
+.info-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.1) !important;
+    border-color: var(--gold) !important;
+}
+
+.info-box:hover::before { transform: scaleX(1); }
+
+.info-box-icon {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+    color: white !important;
+    border-radius: 16px 0 0 16px !important;
+    font-size: 1.8rem !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-gold);
+}
+
+.info-box-content { padding: 16px 20px !important; }
+
+.info-box-text {
+    color: var(--text-secondary) !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    margin-bottom: 6px !important;
+}
+
+.info-box-number {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: var(--charcoal) !important;
+    letter-spacing: -0.02em;
+}
+
+/* ============ SMALL BOXES ============ */
+.small-box {
+    border-radius: 16px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.small-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.15) !important;
+}
+
+.small-box h3 {
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 700 !important;
+}
+
+.small-box-footer {
+    background: rgba(0,0,0,0.08) !important;
+    transition: var(--transition) !important;
+}
+
+.small-box:hover .small-box-footer {
+    background: rgba(0,0,0,0.15) !important;
+}
+
+/* Custom colors for small boxes */
+.bg-info { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important; }
+.bg-success { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important; }
+.bg-warning { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important; }
+.bg-danger { background: linear-gradient(135deg, #6b1f2c 0%, #8b2938 100%) !important; }
+
+/* ============ TABLES ============ */
+.table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, var(--cream) 0%, var(--ivory) 100%) !important;
+    color: var(--charcoal) !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    padding: 16px 20px !important;
+    border-bottom: 2px solid var(--border-light) !important;
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    transition: var(--transition);
+}
+
+.table tbody tr:hover {
+    background: var(--ivory) !important;
+}
+
+.table tbody td {
+    padding: 16px 20px !important;
+    vertical-align: middle !important;
+    border-color: var(--border-light) !important;
+}
+
+.table tbody td a {
+    color: var(--charcoal) !important;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.table tbody td a:hover {
+    color: var(--gold-dark) !important;
+}
+
+/* ============ BUTTONS ============ */
+.btn {
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.05em !important;
+    padding: 10px 20px !important;
+    transition: var(--transition) !important;
+    border: none !important;
+    font-size: 0.85rem !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(201,169,97,0.3) !important;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,169,97,0.5) !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
+    color: #1a3a2e !important;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+    color: white !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    color: white !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #6b1f2c 0%, #8b2938 100%) !important;
+    color: white !important;
+}
+
+.btn-secondary {
+    background: var(--charcoal) !important;
+    color: white !important;
+}
+
+.btn-outline-primary {
+    background: transparent !important;
+    border: 2px solid var(--gold) !important;
+    color: var(--gold-dark) !important;
+}
+
+.btn-outline-primary:hover {
+    background: var(--gold) !important;
+    color: white !important;
+}
+
+/* Add button ("+ Add") */
+.object-tools a.addlink,
+.object-tools a {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(201,169,97,0.3) !important;
+    transition: var(--transition) !important;
+    border: none !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem !important;
+}
+
+.object-tools a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,169,97,0.5) !important;
+    color: white !important;
+}
+
+/* ============ FORMS ============ */
+.form-control,
+.form-select,
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+textarea,
+select {
+    border: 2px solid var(--border-light) !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    font-family: 'Inter', sans-serif !important;
+    transition: var(--transition) !important;
+    background: white !important;
+    font-size: 0.9rem !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 4px rgba(201,169,97,0.1) !important;
+    outline: none !important;
+}
+
+label {
+    font-weight: 600 !important;
+    color: var(--charcoal) !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.02em;
+}
+
+.help-block,
+.helptext {
+    color: var(--text-secondary) !important;
+    font-size: 0.78rem !important;
+    font-style: italic;
+}
+
+/* ============ BADGES & PILLS ============ */
+.badge {
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    font-weight: 700 !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.05em !important;
+}
+
+.badge-success { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important; color: #1a3a2e !important; }
+.badge-warning { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important; color: white !important; }
+.badge-danger { background: linear-gradient(135deg, #6b1f2c 0%, #8b2938 100%) !important; color: white !important; }
+.badge-info { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important; color: white !important; }
+
+/* ============ LOGIN PAGE ============ */
+.login-page,
+.register-page {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a3a2e 100%) !important;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-page::before,
+.register-page::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(201,169,97,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: floatCircle 8s infinite;
+}
+
+.login-page::after,
+.register-page::after {
+    content: '';
+    position: absolute;
+    bottom: 15%;
+    right: 10%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(107,31,44,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: floatCircle 10s infinite reverse;
+}
+
+@keyframes floatCircle {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+}
+
+.login-box {
+    background: white !important;
+    border-radius: 24px !important;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35) !important;
+    padding: 48px !important;
+    max-width: 420px !important;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-logo a {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: var(--charcoal) !important;
+    text-decoration: none !important;
+}
+
+.login-logo a span {
+    color: var(--gold) !important;
+}
+
+.login-box-msg {
+    text-align: center;
+    color: var(--text-secondary) !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 28px !important;
+    font-weight: 400;
+}
+
+.login-box .btn-primary {
+    width: 100%;
+    padding: 14px !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+}
+
+/* ============ ACTION BUTTONS IN LIST VIEW ============ */
+.actions {
+    background: var(--cream) !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    border: 1px solid var(--border-light) !important;
+}
+
+.actions select {
+    margin-right: 12px;
+}
+
+.actions .button {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem !important;
+}
+
+/* ============ PAGINATION ============ */
+.pagination .page-link {
+    border-radius: 10px !important;
+    margin: 0 4px !important;
+    border: 2px solid var(--border-light) !important;
+    color: var(--charcoal) !important;
+    font-weight: 600 !important;
+    padding: 10px 16px !important;
+    transition: var(--transition) !important;
+}
+
+.pagination .page-link:hover {
+    background: var(--cream) !important;
+    border-color: var(--gold) !important;
+    color: var(--gold-dark) !important;
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+    border-color: var(--gold) !important;
+    color: white !important;
+    box-shadow: var(--shadow-gold) !important;
+}
+
+/* ============ FILTERS SIDEBAR ============ */
+#changelist-filter {
+    background: white !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--border-light) !important;
+    padding: 20px !important;
+}
+
+#changelist-filter h2 {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+}
+
+#changelist-filter h3 {
+    color: var(--gold-dark) !important;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    margin-top: 20px !important;
+}
+
+#changelist-filter li.selected a {
+    color: var(--gold-dark) !important;
+    font-weight: 700 !important;
+}
+
+#changelist-filter a {
+    color: var(--text-secondary) !important;
+    transition: var(--transition) !important;
+    padding: 6px 0 !important;
+    display: block;
+}
+
+#changelist-filter a:hover {
+    color: var(--gold) !important;
+    transform: translateX(4px);
+}
+
+/* ============ SEARCH BAR ============ */
+#searchbar {
+    border: 2px solid var(--border-light) !important;
+    border-radius: 50px !important;
+    padding: 12px 20px !important;
+    font-size: 0.9rem !important;
+    min-width: 280px;
+}
+
+#searchbar:focus {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 4px rgba(201,169,97,0.1) !important;
+}
+
+/* ============ SELECTED ROWS ============ */
+tr.selected {
+    background: rgba(201,169,97,0.1) !important;
+}
+
+/* ============ MODAL ============ */
+.modal-content {
+    border-radius: 20px !important;
+    border: none !important;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.3) !important;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #1a3a2e 100%) !important;
+    color: white !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 20px 28px !important;
+    border: none !important;
+}
+
+.modal-title {
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 700 !important;
+    font-size: 1.25rem !important;
+}
+
+.modal-body { padding: 28px !important; }
+
+.modal-footer {
+    padding: 20px 28px !important;
+    border-top: 1px solid var(--border-light) !important;
+}
+
+/* ============ FOOTER ============ */
+.main-footer {
+    background: white !important;
+    border-top: 1px solid var(--border-light) !important;
+    color: var(--text-secondary) !important;
+    padding: 16px 24px !important;
+    font-size: 0.8rem;
+}
+
+.main-footer strong {
+    color: var(--gold-dark) !important;
+    font-family: 'Playfair Display', serif;
+}
+
+/* ============ SCROLLBAR ============ */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--ivory); }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+    border-radius: 10px;
+    border: 2px solid var(--ivory);
+}
+
+/* ============ ACCENT COLORS ============ */
+.accent-gold .nav-sidebar > .nav-item > .nav-link.active {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
+}
+
+/* ============ DASHBOARD CHART CARDS ============ */
+.dashboard-chart-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    margin-bottom: 24px;
+}
+
+.dashboard-chart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashboard-chart-title i {
+    color: var(--gold);
+}
+
+/* ============ SUCCESS/ERROR MESSAGES ============ */
+.messages .alert-success {
+    background: rgba(26,58,46,0.08) !important;
+    border-left: 4px solid var(--dark-green) !important;
+    color: var(--dark-green) !important;
+    border-radius: 10px !important;
+    padding: 16px 20px !important;
+}
+
+.messages .alert-error,
+.messages .alert-danger {
+    background: rgba(107,31,44,0.08) !important;
+    border-left: 4px solid var(--burgundy) !important;
+    color: var(--burgundy) !important;
+    border-radius: 10px !important;
+    padding: 16px 20px !important;
+}
+
+.messages .alert-warning {
+    background: rgba(201,169,97,0.15) !important;
+    border-left: 4px solid var(--gold) !important;
+    color: var(--gold-dark) !important;
+    border-radius: 10px !important;
+    padding: 16px 20px !important;
+}
+
+.messages .alert-info {
+    background: rgba(79,172,254,0.08) !important;
+    border-left: 4px solid #4facfe !important;
+    color: #1565c0 !important;
+    border-radius: 10px !important;
+    padding: 16px 20px !important;
+}
+
+/* ============ ANIMATIONS ============ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.info-box,
+.small-box,
+.card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .content-header h1 {
+        font-size: 1.4rem !important;
+    }
+    
+    .login-box {
+        padding: 32px 24px !important;
+        margin: 20px;
+    }
+    
+    .login-logo a {
+        font-size: 2rem !important;
+    }
+}

@@ -1,0 +1,78 @@
+﻿{% extends 'base_luxury.html' %}
+{% load static %}
+
+{% block title %}My Orders — BharatKart{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <div class="page-hero-content" data-aos="fade-up">
+            <div class="section-eyebrow" style="color: var(--gold);">
+                <i class="fas fa-box"></i> Order History
+            </div>
+            <h1 class="page-hero-title">My <span class="gold-text">Orders</span></h1>
+            <p class="page-hero-subtitle">Review and track all your luxury purchases</p>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    {% if orders %}
+    <div class="row g-3">
+        {% for order in orders %}
+        <div class="col-12" data-aos="fade-up">
+            <div style="background: white; border-radius: 20px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); overflow: hidden; transition: all 0.4s;">
+                <div style="padding: 20px 24px; background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%); border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <div style="font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--charcoal);">#{{ order.order_number }}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">
+                            <i class="fas fa-calendar" style="color: var(--gold);"></i>
+                            {{ order.created_at|date:"F d, Y" }} · {{ order.created_at|date:"g:i A" }}
+                        </div>
+                    </div>
+                    <span style="padding: 6px 14px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+                        {% if order.status == 'delivered' %}background: rgba(26,58,46,0.12); color: var(--dark-green);
+                        {% elif order.status == 'pending' %}background: rgba(201,169,97,0.15); color: var(--gold-dark);
+                        {% elif order.status == 'cancelled' %}background: rgba(107,31,44,0.12); color: var(--burgundy);
+                        {% elif order.status == 'shipped' %}background: rgba(103,58,183,0.12); color: #4527a0;
+                        {% else %}background: rgba(33,150,243,0.12); color: #1565c0;{% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                </div>
+                <div style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Items</div>
+                        <div style="font-weight: 600; font-size: 1.1rem;">{{ order.items.count }}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Payment</div>
+                        <div style="font-weight: 600;">{{ order.payment_status|title }}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Total</div>
+                        <div style="font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold-dark);">₹{{ order.total }}</div>
+                    </div>
+                    <a href="{% url 'orders:detail' order.id %}" class="btn-luxury btn-luxury-primary">
+                        <i class="fas fa-eye"></i> <span>View Details</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 80px 20px; background: white; border-radius: 24px; border: 2px dashed var(--border-light);">
+        <div style="width: 120px; height: 120px; margin: 0 auto 24px; border-radius: 50%; background: linear-gradient(135deg, var(--cream) 0%, var(--ivory) 100%); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--gold);">
+            <i class="fas fa-shopping-bag"></i>
+        </div>
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 12px;">No Orders Yet</h3>
+        <p style="color: var(--text-secondary); max-width: 420px; margin: 0 auto 24px;">
+            Your luxury journey starts with your first order.
+        </p>
+        <a href="{% url 'products:list' %}" class="btn-luxury btn-luxury-primary">
+            <i class="fas fa-gem"></i> <span>Explore Collections</span>
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base_luxury.html' %}
+{% block title %}Wishlist — BharatKart{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <div class="page-hero-content" data-aos="fade-up">
+            <div class="section-eyebrow" style="color: var(--gold);">
+                <i class="fas fa-heart"></i> Saved For Later
+            </div>
+            <h1 class="page-hero-title">
+                My <span class="gold-text">Wishlist</span>
+            </h1>
+            <p class="page-hero-subtitle">
+                Your curated collection of treasured finds
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    {% if items %}
+    <div class="row g-4">
+        {% for item in items %}
+        <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+            <div class="product-card">
+                <div class="product-image-wrap">
+                    <button class="product-wishlist active" title="Remove" 
+                            onclick="removeFromWishlist({{ item.id }})">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    {% if item.product.get_main_image %}
+                        <img src="{{ item.product.get_main_image }}" alt="{{ item.product.name }}">
+                    {% else %}
+                        <div class="product-placeholder"><i class="fas fa-image"></i></div>
+                    {% endif %}
+                </div>
+                <div class="product-info">
+                    {% if item.product.category %}
+                    <div class="product-category">{{ item.product.category.name }}</div>
+                    {% endif %}
+                    <h5 class="product-name">{{ item.product.name }}</h5>
+                    <div class="product-price-wrap">
+                        <span class="product-price">₹{{ item.product.price }}</span>
+                        {% if item.product.mrp > item.product.price %}
+                        <span class="product-mrp">₹{{ item.product.mrp }}</span>
+                        <span class="product-discount">{{ item.product.discount|floatformat:0 }}% OFF</span>
+                        {% endif %}
+                    </div>
+                    <button class="btn-add-cart" onclick="addToCart({{ item.product.id }})">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Add to Bag</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state" data-aos="fade-up">
+        <div class="empty-state-icon"><i class="fas fa-heart"></i></div>
+        <h4>Your Wishlist Awaits</h4>
+        <p>Begin curating your collection of luxury favorites</p>
+        <a href="{% url 'products:list' %}" class="btn-luxury btn-luxury-primary">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Discover Collections</span>
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function removeFromWishlist(itemId) {
+    if (!confirm('Remove this item from your wishlist?')) return;
+    
+    fetch(`/wishlist/remove/${itemId}/`, {
+        method: 'POST',
+        headers: {'X-CSRFToken': getCookie('csrftoken')}
+    }).then(() => location.reload());
+}
+
+function addToCart(productId) {
+    fetch(`/cart/add/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({quantity: 1})
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) showToast('Added to your bag', 'success');
+        else showToast(data.error || 'Please login first', 'error');
+    })
+    .catch(() => showToast('Please login to add items', 'error'));
+}
+</script>
+{% endblock %}

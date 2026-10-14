@@ -1,0 +1,123 @@
+{% extends 'base_luxury.html' %}
+{% block title %}Checkout — BharatKart{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <div class="page-hero-content" data-aos="fade-up">
+            <div class="section-eyebrow" style="color: var(--gold);">
+                <i class="fas fa-lock"></i> Secure Checkout
+            </div>
+            <h1 class="page-hero-title">Complete <span class="gold-text">Your Order</span></h1>
+            <p class="page-hero-subtitle">Review your details and proceed to payment</p>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row g-4">
+
+        <!-- LEFT: Address + Items -->
+        <div class="col-lg-7">
+
+            <!-- Shipping Address -->
+            <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid var(--border-light); margin-bottom: 20px;">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 24px;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--gold);"></i> Shipping Address
+                </h3>
+                
+                <div style="padding: 20px; background: var(--ivory); border-radius: 16px; margin-bottom: 20px;">
+                    <p style="margin: 0; font-weight: 700; font-size: 1rem;">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </p>
+                    <p style="margin: 8px 0 0; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                        {% if user.address_line1 %}
+                            {{ user.address_line1 }}<br>
+                            {% if user.address_line2 %}{{ user.address_line2 }}<br>{% endif %}
+                            {{ user.city }}{% if user.city %}, {% endif %}{{ user.state }} {{ user.pincode }}
+                        {% else %}
+                            <em>No address saved. Please add one from your profile.</em>
+                        {% endif %}
+                    </p>
+                    {% if user.phone %}
+                    <p style="margin: 8px 0 0; color: var(--text-secondary); font-size: 0.9rem;">
+                        <i class="fas fa-phone" style="color: var(--gold);"></i> {{ user.phone }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <a href="{% url 'accounts:profile' %}" class="btn-luxury btn-luxury-outline">
+                    <i class="fas fa-edit"></i> <span>Change Address</span>
+                </a>
+            </div>
+
+            <!-- Order Items -->
+            <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid var(--border-light);">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 24px;">
+                    <i class="fas fa-box-open" style="color: var(--gold);"></i> Order Items ({{ cart.items.count }})
+                </h3>
+
+                {% for item in cart.items.all %}
+                <div style="display: flex; gap: 16px; padding: 16px; background: var(--ivory); border-radius: 14px; margin-bottom: 12px; align-items: center;">
+                    <div style="width: 70px; height: 70px; border-radius: 12px; background: white; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border-light);">
+                        {% if item.product.get_main_image %}
+                            <img src="{{ item.product.get_main_image }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                            <i class="fas fa-image" style="font-size: 1.5rem; color: var(--gold); opacity: 0.5;"></i>
+                        {% endif %}
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 4px;">{{ item.product.name }}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.8rem;">Qty: {{ item.quantity }}</div>
+                    </div>
+                    <div style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--gold-dark);">
+                        ₹{{ item.get_total_price }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- RIGHT: Summary -->
+        <div class="col-lg-5">
+            <div style="background: white; border-radius: 24px; padding: 32px; border: 1px solid var(--border-light); position: sticky; top: 120px;">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 24px;">
+                    <i class="fas fa-receipt" style="color: var(--gold);"></i> Order Summary
+                </h3>
+
+                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-light);">
+                    <span style="color: var(--text-secondary);">Subtotal</span>
+                    <span style="font-weight: 600;">₹{{ cart.get_subtotal }}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-light);">
+                    <span style="color: var(--text-secondary);">GST</span>
+                    <span style="font-weight: 600;">₹{{ cart.get_gst_total }}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-light);">
+                    <span style="color: var(--text-secondary);">Shipping</span>
+                    <span style="font-weight: 600; color: var(--dark-green);">FREE</span>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; padding: 20px 0; margin-top: 8px; border-top: 2px solid var(--gold);">
+                    <span style="font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700;">Total</span>
+                    <span style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold-dark);">₹{{ cart.get_grand_total }}</span>
+                </div>
+
+                <form method="post" action="{% url 'cart:place_order' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-luxury btn-luxury-primary" style="width: 100%; margin-top: 20px;">
+                        <i class="fas fa-lock"></i>
+                        <span>Proceed to Payment</span>
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 16px;">
+                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin: 0;">
+                        <i class="fas fa-shield-alt" style="color: var(--gold);"></i> 100% Secure Payment
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
