@@ -1,4 +1,4 @@
-#-r base.txt
+-r base.txt
 gunicorn==20.1.0
 psycopg2-binary==2.9.6
 whitenoise==6.4.0
