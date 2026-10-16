@@ -25,3 +25,4 @@ razorpay==1.3.0
 paytmchecksum==1.7.0
 twilio==8.2.0
 django-jazzmin
+django-extensions
