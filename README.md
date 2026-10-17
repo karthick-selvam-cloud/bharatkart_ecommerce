@@ -336,70 +336,58 @@ bharatkart_ecommerce
 
 📸 Screenshots
 
-:Homepage
+Homepage:
 
 Luxury gold/charcoal hero section with featured products.
 
 
 
-Product Listing
+Product Listing:
 
 Grid of 112 products with images, ratings, and filters.
 
 
 
-AI Concierge
+AI Concierge:
 
 Chat interface with intent detection and product cards.
 
 
 
-Admin Panel
+Admin Panel:
 
 Custom Jazzmin theme with dark sidebar and gold accents.
 
 
 
-Wallet
+Wallet:
 
 Dark luxury balance card with add money modal.
 
 -----------------------------------------------------------------------------------
 
 
-📄 License
+📄 License:
 
 This project is licensed under the MIT License — see LICENSE file for details.
 
+----------------------------------------------------------------------------------
 
-
-text
+text:
 
 MIT License
 
-
+----------------------------------------------------------------------------------
 
 Copyright (c) 2026 BharatKart
 
-
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-
-of this software and associated documentation files (the "Software"), to deal
-
-in the Software without restriction, including without limitation the rights
-
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-
-copies of the Software...
-
-
+-----------------------------------------------------------------------------------
 
 🙏 Acknowledgements
 
+----------------------------------------------------------------------------------
 
-
-Libraries \& Frameworks:
+Libraries & Frameworks:
 
 Django — The web framework for perfectionists
 
@@ -423,13 +411,13 @@ FAISS — Vector similarity search
 
 Sentence Transformers — State-of-the-art embeddings
 
-
+-------------------------------------------------------
 
 AI Services:
 
 Groq — Lightning-fast LLM inference
 
-
+----------------------------------------------------
 
 Payment Services:
 
@@ -443,7 +431,7 @@ Paytm — Digital payments
 
 PhonePe — UPI payments
 
-
+------------------------------------------------------------
 
 Free Image Sources:
 
@@ -457,33 +445,22 @@ Pexels — Free stock photos
 
 Pixabay — Royalty-free images
 
-
+------------------------------------------------------
 
 Inspiration:
 
 Design inspired by luxury brands like Gucci, Dior, and Chanel
 
-
+----------------------------------------------------------
 
 Architecture inspired by Netflix, Amazon, and Flipkart
 
-
-
-bash
-
-git add README.md
-
-git commit -m "docs: add comprehensive README"
-
-git push origin main
-
 --------------------------------------------------------------------------
 
-\## ✨ Key Features
+## ✨ Key Features
 
 
-
-\### 👤 User Management
+### 👤 User Management
 
 | Feature | Description |
 
@@ -501,7 +478,7 @@ git push origin main
 
 
 
-\### 🛍️ Product Catalog
+### 🛍️ Product Catalog
 
 | Feature | Description |
 
@@ -525,7 +502,7 @@ git push origin main
 
 
 
-\### 🛒 Shopping Experience
+### 🛒 Shopping Experience
 
 | Feature | Description |
 
@@ -544,8 +521,7 @@ git push origin main
 | Product comparison | Side-by-side specs |
 
 
-
-\### 📦 Order Management
+### 📦 Order Management
 
 | Feature | Description |
 
@@ -565,7 +541,7 @@ git push origin main
 
 
 
-\### 💳 Payment System
+### 💳 Payment System
 
 | Gateway | Status |
 
@@ -585,7 +561,7 @@ git push origin main
 
 
 
-\### 🤖 AI \& ML
+### 🤖 AI \& ML
 
 | Feature | Description |
 
@@ -607,7 +583,7 @@ git push origin main
 
 
 
-\### 🎨 Design \& UX
+### 🎨 Design \& UX
 
 | Feature | Description |
 
@@ -631,11 +607,11 @@ git push origin main
 
 -----------------------------------------------------------------------
 
-\## 🏗️ Architecture
+## 🏗️ Architecture
 
 
 
-\### High-Level Architecture
+### High-Level Architecture
 
 ┌─────────────────────────────────────────────────────────────┐
 
@@ -719,9 +695,9 @@ git push origin main
 
 └─────────────────────────────────────────────────────────────┘
 
-\-----------------------------------------------------------------------
+-----------------------------------------------------------------------
 
-\### Request Flow (Payment)
+### Request Flow (Payment)
 
 User clicks "Pay"
 
@@ -781,7 +757,7 @@ Email/SMS sent to user
 
 -------------------------------------------------------------
 
-\### RAG Pipeline Flow
+### RAG Pipeline Flow
 
 User Query: "Track my order ORD123ABC"
 
@@ -862,11 +838,11 @@ Vanilla JavaScript for interactions
 
 ----------------------------------------------------------
 
-\## 🚀 Getting Started
+## 🚀 Getting Started
 
 
 
-\### Prerequisites
+### Prerequisites
 
 
 
@@ -880,9 +856,9 @@ Vanilla JavaScript for interactions
 
 \- \*\*Node.js\*\* (optional, for linting)
 
+-------------------------------------------------
 
-
-\### Step 1: Clone the Repository
+### Step 1: Clone the Repository
 
 bash
 
@@ -892,9 +868,9 @@ git clone https://github.com/yourusername/bharatkart.git
 
 cd bharatkart
 
+---------------------------------------------------------
 
-
-\### Step2: Create Virtual Environment
+### Step2: Create Virtual Environment
 
 Windows:
 
