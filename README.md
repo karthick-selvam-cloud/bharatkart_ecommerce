@@ -336,31 +336,31 @@ bharatkart_ecommerce
 
 📸 Screenshots
 
-Homepage:
+✅Homepage:
 
 Luxury gold/charcoal hero section with featured products.
 
 
 
-Product Listing:
+✅Product Listing:
 
 Grid of 112 products with images, ratings, and filters.
 
 
 
-AI Concierge:
+✅AI Concierge:
 
 Chat interface with intent detection and product cards.
 
 
 
-Admin Panel:
+✅Admin Panel:
 
 Custom Jazzmin theme with dark sidebar and gold accents.
 
 
 
-Wallet:
+✅Wallet:
 
 Dark luxury balance card with add money modal.
 
@@ -373,13 +373,13 @@ This project is licensed under the MIT License — see LICENSE file for details.
 
 ----------------------------------------------------------------------------------
 
-text:
+✅text:
 
 MIT License
 
 ----------------------------------------------------------------------------------
 
-Copyright (c) 2026 BharatKart
+✅Copyright (c) 2026 BharatKart
 
 -----------------------------------------------------------------------------------
 
@@ -387,7 +387,7 @@ Copyright (c) 2026 BharatKart
 
 ----------------------------------------------------------------------------------
 
-Libraries & Frameworks:
+✅Libraries & Frameworks:
 
 Django — The web framework for perfectionists
 
@@ -419,7 +419,7 @@ Groq — Lightning-fast LLM inference
 
 ----------------------------------------------------
 
-Payment Services:
+✅Payment Services:
 
 Razorpay — India's payment gateway
 
@@ -433,7 +433,7 @@ PhonePe — UPI payments
 
 ------------------------------------------------------------
 
-Free Image Sources:
+✅Free Image Sources:
 
 Unsplash — Beautiful free photos
 
@@ -447,13 +447,13 @@ Pixabay — Royalty-free images
 
 ------------------------------------------------------
 
-Inspiration:
+✅Inspiration:
 
 Design inspired by luxury brands like Gucci, Dior, and Chanel
 
 ----------------------------------------------------------
 
-Architecture inspired by Netflix, Amazon, and Flipkart
+✅Architecture inspired by Netflix, Amazon, and Flipkart
 
 --------------------------------------------------------------------------
 
@@ -699,67 +699,67 @@ Architecture inspired by Netflix, Amazon, and Flipkart
 
 ### Request Flow (Payment)
 
-User clicks "Pay"
+✅User clicks "Pay"
 
 ↓
 
 
 
-Django creates Razorpay Order via API
+✅Django creates Razorpay Order via API
 
 ↓
 
 
 
-Order ID sent to frontend
+✅Order ID sent to frontend
 
 ↓
 
 
 
-Razorpay Checkout modal opens
+✅Razorpay Checkout modal opens
 
 ↓
 
 
 
-User completes payment (UPI/Card/NetBanking)
+✅User completes payment (UPI/Card/NetBanking)
 
 ↓
 
 
 
-Razorpay returns: {order\_id, payment\_id, signature}
+✅Razorpay returns: {order\_id, payment\_id, signature}
 
 ↓
 
 
 
-Django verifies HMAC signature
+✅Django verifies HMAC signature
 
 ↓
 
 
 
-Payment marked complete → Order confirmed
+✅Payment marked complete → Order confirmed
 
 ↓
 
 
 
-Webhook fires (background confirmation)
+✅Webhook fires (background confirmation)
 
 ↓
 
 
 
-Email/SMS sent to user
+✅Email/SMS sent to user
 
 -------------------------------------------------------------
 
 ### RAG Pipeline Flow
 
-User Query: "Track my order ORD123ABC"
+✅User Query: "Track my order ORD123ABC"
 
 ↓
 
@@ -814,27 +814,27 @@ User Query: "Track my order ORD123ABC"
 
 🚀 Technologies Used
 
-Bootstrap 5.3.2 for responsive grid
+✅Bootstrap 5.3.2 for responsive grid
 
 
 
-Font Awesome 6.5 for icons
+✅Font Awesome 6.5 for icons
 
 
 
-Google Fonts (Playfair Display, Cormorant Garamond, Inter)
+✅Google Fonts (Playfair Display, Cormorant Garamond, Inter)
 
 
 
-AOS 2.3.1 for scroll animations
+✅AOS 2.3.1 for scroll animations
 
 
 
-Custom CSS with 800+ lines of luxury styling
+✅Custom CSS with 800+ lines of luxury styling
 
 
 
-Vanilla JavaScript for interactions
+✅Vanilla JavaScript for interactions
 
 ----------------------------------------------------------
 
@@ -858,7 +858,7 @@ Vanilla JavaScript for interactions
 
 -------------------------------------------------
 
-### Step 1: Clone the Repository
+### ✅Step 1: Clone the Repository
 
 bash
 
@@ -870,7 +870,7 @@ cd bharatkart
 
 ---------------------------------------------------------
 
-### Step2: Create Virtual Environment
+### ✅Step2: Create Virtual Environment
 
 Windows:
 
@@ -894,7 +894,7 @@ source venv/bin/activate
 
 
 
-Step 3: Install Dependencies
+✅Step 3: Install Dependencies
 
 bash
 
@@ -904,7 +904,7 @@ pip install -r requirements.txt
 
 
 
-Step 4: Setup MySQL Database
+✅Step 4: Setup MySQL Database
 
 sql
 
@@ -918,7 +918,7 @@ FLUSH PRIVILEGES;
 
 
 
-Step 5: Configure Environment
+✅Step 5: Configure Environment
 
 bash
 
@@ -932,7 +932,7 @@ See Environment Variables section.
 
 
 
-Step 6: Run Migrations
+✅Step 6: Run Migrations
 
 bash
 
@@ -942,7 +942,7 @@ python manage.py migrate
 
 
 
-Step 7: Create Superuser
+✅Step 7: Create Superuser
 
 bash
 
@@ -950,7 +950,7 @@ python manage.py createsuperuser
 
 
 
-Step 8: Seed Sample Data (Optional)
+✅Step 8: Seed Sample Data (Optional)
 
 bash
 
@@ -962,7 +962,7 @@ python scripts/add\_product\_images.py
 
 
 
-Step 9: Collect Static Files
+✅Step 9: Collect Static Files
 
 bash
 
@@ -970,7 +970,7 @@ python manage.py collectstatic --noinput
 
 
 
-Step 10: Run Server
+✅Step 10: Run Server
 
 bash
 
