@@ -17,8 +17,6 @@
 
 \## 📁 Project Structure
 
-
-
 bharatkart\_ecommerce/
 
 │
