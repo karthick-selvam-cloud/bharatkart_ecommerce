@@ -19,8 +19,7 @@
 
 bharatkart_ecommerce/
 │
-├── manage.py   # Django management script
-├── requirements.txt                # Python dependencies
+├── manage.py   # Django management script ├── requirements.txt                # Python dependencies
 ├── .env                            # Environment variables (not committed)
 ├── .env.example                    # Environment variable template
 ├── .gitignore                      # Git ignore rules
