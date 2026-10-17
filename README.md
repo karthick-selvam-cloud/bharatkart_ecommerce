@@ -21,153 +21,343 @@ bharatkart_ecommerce/
 ├── manage.py
 ├── requirements.txt
 ├── .env
-├── .env.example
-├── .gitignore
 ├── README.md
 ├── docker-compose.yml
 ├── Dockerfile
+├── .gitignore
 │
-├── ecommerce/ # Django project config
-│ ├── init.py
-│ ├── settings.py # Main settings
-│ ├── urls.py # URL routing
-│ ├── asgi.py # ASGI config
-│ ├── wsgi.py # WSGI config
-│ ├── celery.py # Celery config
-│ └── middleware/
+├── ecommerce/                          # Main project directory
+│   ├── __init__.py
+│   ├── settings/
+│   │   ├── __init__.py
+│   │   ├── base.py                     # Base settings
+│   │   ├── development.py              # Development settings
+│   │   └── production.py               # Production settings
+│   ├── urls.py                         # Main URL configuration
+│   ├── asgi.py                         # ASGI configuration for WebSocket
+│   ├── wsgi.py                         # WSGI configuration
+│   ├── celery.py                       # Celery configuration
+│   └── middleware/
+│       ├── __init__.py
+│       ├── custom_middleware.py
+│       └── request_logger.py
 │
-├── apps/ # Django applications
-│ │
-│ ├── accounts/ # User management
-│ │ ├── models.py # User, Address, SellerProfile, Wallet
-│ │ ├── views.py # Login, Register, Dashboard, Wallet
-│ │ ├── urls.py
-│ │ ├── admin.py
-│ │ ├── context_processors.py # Wallet badge
-│ │ ├── templates/accounts/
-│ │ │ ├── login.html
-│ │ │ ├── register.html
-│ │ │ ├── dashboard.html
-│ │ │ ├── wallet.html
-│ │ │ ├── my_orders.html
-│ │ │ ├── profile.html
-│ │ │ └── addresses.html
-│ │ └── migrations/
-│ │
-│ ├── products/ # Product catalog
-│ │ ├── models.py # Category, Brand, Product, ProductImage
-│ │ ├── views.py # Home, List, Detail
-│ │ ├── urls.py
-│ │ ├── admin.py
-│ │ ├── templates/products/
-│ │ │ ├── home.html
-│ │ │ ├── product_list.html
-│ │ │ └── product_detail.html
-│ │ └── migrations/
-│ │
-│ ├── cart/ # Shopping cart
-│ │ ├── models.py # Cart, CartItem
-│ │ ├── views.py
-│ │ ├── urls.py
-│ │ ├── context_processors.py
-│ │ ├── templates/cart/
-│ │ │ ├── cart_detail.html
-│ │ │ └── checkout.html
-│ │ └── migrations/
-│ │
-│ ├── orders/ # Order management
-│ │ ├── models.py # Order, OrderItem
-│ │ ├── views.py
-│ │ ├── urls.py
-│ │ ├── admin.py
-│ │ ├── templates/orders/
-│ │ │ ├── order_list.html
-│ │ │ └── order_detail.html
-│ │ └── migrations/
-│ │
-│ ├── payments/ # Payment gateways
-│ │ ├── models.py # Payment
-│ │ ├── views.py # Razorpay integration
-│ │ ├── razorpay_client.py # Razorpay SDK wrapper
-│ │ ├── urls.py
-│ │ ├── admin.py
-│ │ ├── templates/payments/
-│ │ │ ├── payment_page.html
-│ │ │ ├── payment_success.html
-│ │ │ └── payment_error.html
-│ │ └── migrations/
-│ │
-│ ├── wishlist/ # Wishlist
-│ │ ├── models.py # Wishlist, WishlistItem
-│ │ ├── views.py
-│ │ ├── urls.py
-│ │ ├── context_processors.py
-│ │ ├── templates/wishlist/
-│ │ │ └── wishlist.html
-│ │ └── migrations/
-│ │
-│ └── rag/ # AI Concierge
-│ ├── models.py # KnowledgeBase, ChatSession, ChatMessage
-│ ├── views.py # Chat view, Query handler
-│ ├── intent_engine.py # Intent detection (15+ methods)
-│ ├── llm_client.py # Multi-provider LLM client
-│ ├── rag_pipeline.py # RAG orchestration
-│ ├── vector_store.py # FAISS integration
-│ ├── urls.py
-│ ├── admin.py
-│ ├── templates/rag/
-│ │ └── chat.html
-│ └── migrations/
+├── apps/                               # All Django applications
+│   ├── __init__.py
+│   │
+│   ├── accounts/                       # User management
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── serializers.py
+│   │   ├── forms.py
+│   │   ├── tasks.py
+│   │   ├── tests/
+│   │   │   ├── __init__.py
+│   │   │   ├── test_models.py
+│   │   │   ├── test_views.py
+│   │   │   └── test_api.py
+│   │   ├── migrations/
+│   │   │   └── __init__.py
+│   │   ├── templates/
+│   │   │   └── accounts/
+│   │   │       ├── login.html
+│   │   │       ├── register.html
+│   │   │       ├── profile.html
+│   │   │       ├── addresses.html
+│   │   │       └── dashboard.html
+│   │   └── static/
+│   │       └── accounts/
+│   │           ├── css/
+│   │           └── js/
+│   │
+│   ├── products/                       # Product management
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── serializers.py
+│   │   ├── context_processors.py
+│   │   ├── tasks.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   ├── templates/
+│   │   │   └── products/
+│   │   │       ├── home.html
+│   │   │       ├── product_list.html
+│   │   │       ├── product_detail.html
+│   │   │       ├── category_list.html
+│   │   │       └── search_results.html
+│   │   └── static/
+│   │       └── products/
+│   │
+│   ├── cart/                           # Shopping cart
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── context_processors.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   └── templates/
+│   │       └── cart/
+│   │           ├── cart_detail.html
+│   │           └── checkout.html
+│   │
+│   ├── orders/                         # Order management
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── serializers.py
+│   │   ├── tasks.py
+│   │   ├── utils.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   └── templates/
+│   │       └── orders/
+│   │           ├── order_list.html
+│   │           ├── order_detail.html
+│   │           ├── order_confirmation.html
+│   │           ├── invoice.html
+│   │           └── track_order.html
+│   │
+│   ├── payments/                       # Payment integrations
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── razorpay_integration.py
+│   │   ├── paytm_integration.py
+│   │   ├── phonepe_integration.py
+│   │   ├── tasks.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   └── templates/
+│   │       └── payments/
+│   │           ├── payment_page.html
+│   │           ├── razorpay_payment.html
+│   │           ├── paytm_payment.html
+│   │           ├── phonepe_payment.html
+│   │           ├── payment_success.html
+│   │           └── payment_error.html
+│   │
+│   ├── reviews/                        # Product reviews
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   └── templates/
+│   │       └── reviews/
+│   │           └── review_form.html
+│   │
+│   ├── wishlist/                       # Wishlist functionality
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   └── templates/
+│   │       └── wishlist/
+│   │           └── wishlist.html
+│   │
+│   ├── chat/                           # Real-time chat support
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── consumers.py                # WebSocket consumers
+│   │   ├── routing.py                  # WebSocket routing
+│   │   ├── tasks.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   ├── templates/
+│   │   │   └── chat/
+│   │   │       ├── chat_home.html
+│   │   │       ├── chat_room.html
+│   │   │       └── agent_dashboard.html
+│   │   └── static/
+│   │       └── chat/
+│   │           └── js/
+│   │
+│   ├── rag/                            # RAG Pipeline
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── rag_pipeline.py             # Main RAG implementation
+│   │   ├── vector_store.py             # Vector database
+│   │   ├── tasks.py
+│   │   ├── utils.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   ├── templates/
+│   │   │   └── rag/
+│   │   │       ├── chat.html
+│   │   │       ├── knowledge_base_admin.html
+│   │   │       └── analytics.html
+│   │   └── static/
+│   │       └── rag/
+│   │
+│   ├── recommendations/                # ML Recommendations
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── recommendation_engine.py    # ML engine
+│   │   ├── tasks.py
+│   │   ├── utils.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   ├── templates/
+│   │   │   └── recommendations/
+│   │   │       └── recommendations.html
+│   │   └── static/
+│   │       └── recommendations/
+│   │
+│   ├── notifications/                  # SMS & Email notifications
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── urls.py
+│   │   ├── sms_service.py
+│   │   ├── email_service.py
+│   │   ├── tasks.py
+│   │   ├── tests/
+│   │   ├── migrations/
+│   │   └── templates/
+│   │       └── notifications/
+│   │           ├── email_templates/
+│   │           └── sms_templates/
+│   │
+│   └── analytics/                      # Analytics dashboard
+│       ├── __init__.py
+│       ├── admin.py
+│       ├── apps.py
+│       ├── models.py
+│       ├── views.py
+│       ├── urls.py
+│       ├── tasks.py
+│       ├── tests/
+│       ├── migrations/
+│       └── templates/
+│           └── analytics/
+│               ├── dashboard.html
+│               └── reports.html
 │
-├── templates/ # Global templates
-│ ├── base_luxury.html # Master template
-│ ├── includes/
-│ │ └── ai_support_button.html # Floating AI button
-│ ├── admin/
-│ │ └── index.html # Custom dashboard
-│ └── errors/
-│ ├── 404.html
-│ └── 500.html
+├── templates/                          # Global templates
+│   ├── base.html
+│   ├── header.html
+│   ├── footer.html
+│   ├── sidebar.html
+│   ├── navbar.html
+│   ├── pagination.html
+│   ├── messages.html
+│   └── errors/
+│       ├── 404.html
+│       ├── 500.html
+│       └── 403.html
 │
-├── static/ # Static files
-│ ├── css/
-│ │ └── admin_luxury.css
-│ ├── js/
-│ │ └── admin_custom.js
-│ └── images/
+├── static/                             # Global static files
+│   ├── css/
+│   │   ├── main.css
+│   │   ├── style.css
+│   │   ├── responsive.css
+│   │   └── themes/
+│   ├── js/
+│   │   ├── main.js
+│   │   ├── cart.js
+│   │   ├── chat.js
+│   │   ├── payment.js
+│   │   └── recommendations.js
+│   ├── images/
+│   │   ├── logo.png
+│   │   ├── placeholder.png
+│   │   └── icons/
+│   └── fonts/
 │
-├── media/ # User uploads
-│ ├── products/
-│ ├── categories/
-│ ├── brands/
-│ ├── profiles/
-│ └── invoices/
+├── media/                              # User uploaded files
+│   ├── products/
+│   ├── categories/
+│   ├── brands/
+│   ├── profiles/
+│   ├── reviews/
+│   ├── chat_attachments/
+│   └── invoices/
 │
-├── scripts/ # Utility scripts
-│ ├── seed_products.py # Create 112 sample products
-│ ├── add_product_images.py # Bulk image URLs
-│ ├── fix_product_images.py # Repair image records
-│ └── generate_sample_data.py
+├── locale/                             # Translation files
+│   ├── en/
+│   │   └── LC_MESSAGES/
+│   ├── hi/
+│   │   └── LC_MESSAGES/
+│   └── ta/
+│       └── LC_MESSAGES/
 │
-├── locale/ # Translations
-│ ├── en/
-│ ├── hi/
-│ └── ta/
+├── scripts/                            # Utility scripts
+│   ├── setup.sh
+│   ├── deploy.sh
+│   ├── backup.sh
+│   ├── seed_data.py
+│   ├── generate_sample_data.py
+│   └── performance_test.py
 │
-├── docs/ # Documentation
-│ ├── api.md
-│ ├── deployment.md
-│ └── architecture.md
+├── docs/                               # Documentation
+│   ├── api.md
+│   ├── deployment.md
+│   ├── development.md
+│   └── architecture.md
 │
-├── logs/ # Log files
-│ ├── django.log
-│ └── celery.log
+├── tests/                              # Integration tests
+│   ├── __init__.py
+│   ├── test_e2e.py
+│   └── test_performance.py
 │
-├── faiss_index/ # Vector storage
-│ └── knowledge_base.index
+├── logs/                               # Log files
+│   ├── django.log
+│   ├── celery.log
+│   └── error.log
 │
-└── nginx/
-└── nginx.conf
+├── chroma_db/                          # ChromaDB storage
+├── faiss_index/                        # FAISS index files
+│   ├── knowledge_base.index
+│   └── knowledge_base.index.metadata
+│
+├── nginx/                              # Nginx configuration
+│   ├── nginx.conf
+│   └── sites-available/
+│       └── bharatkart
+│
+└── requirements/
+    ├── base.txt
+    ├── development.txt
+    ├── production.txt
+    └── test.txt
 -------------------------------------------------------------
 📸 Screenshots
 Homepage
