@@ -13,7 +13,7 @@
 - 📱 **Indian Market Focus** — GST, UPI, multi-language (10+ Indian languages)
 - 🎨 **Jazzmin Admin** — Custom luxury admin panel
 - 🔒 **Production-Ready** — Docker, Celery, Redis, Nginx configs included
-\---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 \## 📁 Project Structure
 
