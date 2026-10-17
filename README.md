@@ -13,9 +13,9 @@
 - 📱 **Indian Market Focus** — GST, UPI, multi-language (10+ Indian languages)
 - 🎨 **Jazzmin Admin** — Custom luxury admin panel
 - 🔒 **Production-Ready** — Docker, Celery, Redis, Nginx configs included
+  
 ---------------------------------------------------------------------------------------------------
-
-\## 📁 Project Structure
+## 📁 Project Structure
 
 bharatkart\_ecommerce/
 
@@ -479,7 +479,6 @@ git commit -m "docs: add comprehensive README"
 
 git push origin main
 
-The README is production-ready — it includes:
 --------------------------------------------------------------------------
 
 \## ✨ Key Features
@@ -631,6 +630,7 @@ The README is production-ready — it includes:
 | Dark luxury sections | Hero banners, CTAs |
 
 | Jazzmin admin | Custom themed admin panel |
+
 -----------------------------------------------------------------------
 
 \## 🏗️ Architecture
@@ -780,6 +780,7 @@ Webhook fires (background confirmation)
 
 
 Email/SMS sent to user
+
 -------------------------------------------------------------
 
 \### RAG Pipeline Flow
