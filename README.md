@@ -15,40 +15,40 @@
 - 🔒 **Production-Ready** — Docker, Celery, Redis, Nginx configs included
 
 ---------------------------------------------------------------------------------------------------
-### Project Structure
+## 📁 Project Structure
 
 bharatkart_ecommerce/
 │
-├── 📄 manage.py                    # Django management script
-├── 📄 requirements.txt             # Python dependencies
-├── 📄 .env                         # Environment variables (NOT in git)
-├── 📄 .env.example                 # Environment template
-├── 📄 .gitignore                   # Git ignore rules
-├── 📄 README.md                    # This file
-├── 🐳 docker-compose.yml           # Docker multi-service config
-├── 🐳 Dockerfile                   # Docker image definition
+├── manage.py                       # Django management script
+├── requirements.txt                # Python dependencies
+├── .env                            # Environment variables (not committed)
+├── .env.example                    # Environment variable template
+├── .gitignore                      # Git ignore rules
+├── README.md                       # Project documentation
+├── Dockerfile                      # Docker image configuration
+├── docker-compose.yml              # Multi-service Docker configuration
 │
-├── 📂 ecommerce/                   # ⚙️ Django project configuration
+├── ecommerce/                      # Django project configuration
 │   ├── __init__.py
-│   ├── settings.py                 # Main settings
-│   ├── urls.py                     # Root URL router
+│   ├── settings.py                 # Project settings
+│   ├── urls.py                     # Root URL routing
 │   ├── wsgi.py                     # WSGI entry point
 │   ├── asgi.py                     # ASGI entry point
-│   ├── celery.py                   # Celery config
-│   └── middleware/                 # Custom middleware
+│   ├── celery.py                   # Celery configuration
+│   └── middleware/
 │       ├── __init__.py
-│       └── request_logger.py
+│       └── request_logger.py       # Request logging middleware
 │
-├── 📂 apps/                        # 🧩 All Django applications
+├── apps/                           # Django applications
 │   │
-│   ├── 📂 accounts/                # 👤 User Management
-│   │   ├── models.py               # User, Address, SellerProfile, Wallet, WalletTransaction
-│   │   ├── views.py                # Auth, Dashboard, Wallet, Addresses
+│   ├── accounts/                   # User and account management
+│   │   ├── models.py               # Users, addresses, wallets, sellers
+│   │   ├── views.py                # Authentication and user dashboards
 │   │   ├── urls.py
 │   │   ├── admin.py
-│   │   ├── context_processors.py   # Wallet badge (global)
+│   │   ├── context_processors.py   # Global wallet information
 │   │   ├── migrations/
-│   │   └── 📂 templates/accounts/
+│   │   └── templates/accounts/
 │   │       ├── login.html
 │   │       ├── register.html
 │   │       ├── dashboard.html
@@ -59,122 +59,123 @@ bharatkart_ecommerce/
 │   │       ├── profile.html
 │   │       └── addresses.html
 │   │
-│   ├── 📂 products/                # 📦 Product Catalog
-│   │   ├── models.py               # Category, Brand, Product, ProductImage, ProductVariant
-│   │   ├── views.py                # Home, List, Detail
+│   ├── products/                   # Product catalog
+│   │   ├── models.py               # Categories, brands, products, variants
+│   │   ├── views.py                # Homepage, listing, product details
 │   │   ├── urls.py
 │   │   ├── admin.py
-│   │   ├── serializers.py          # DRF serializers
-│   │   ├── context_processors.py   # Categories (global)
+│   │   ├── serializers.py          # REST API serializers
+│   │   ├── context_processors.py   # Global category information
 │   │   ├── migrations/
-│   │   └── 📂 templates/products/
-│   │       ├── home.html           # ✨ Luxury homepage
+│   │   └── templates/products/
+│   │       ├── home.html
 │   │       ├── product_list.html
 │   │       └── product_detail.html
 │   │
-│   ├── 📂 cart/                    # 🛒 Shopping Cart
-│   │   ├── models.py               # Cart, CartItem
-│   │   ├── views.py                # Add, Update, Remove, Checkout
+│   ├── cart/                       # Shopping cart and checkout
+│   │   ├── models.py               # Cart and cart items
+│   │   ├── views.py                # Add, update, remove, checkout
 │   │   ├── urls.py
-│   │   ├── context_processors.py   # Cart count (global)
+│   │   ├── context_processors.py   # Global cart count
 │   │   ├── migrations/
-│   │   └── 📂 templates/cart/
+│   │   └── templates/cart/
 │   │       ├── cart_detail.html
 │   │       └── checkout.html
 │   │
-│   ├── 📂 orders/                  # 📋 Order Management
-│   │   ├── models.py               # Order, OrderItem
-│   │   ├── views.py                # List, Detail, Cancel
+│   ├── orders/                     # Order management
+│   │   ├── models.py               # Orders and order items
+│   │   ├── views.py                # Order list, details, cancellation
 │   │   ├── urls.py
 │   │   ├── admin.py
 │   │   ├── migrations/
-│   │   └── 📂 templates/orders/
+│   │   └── templates/orders/
 │   │       ├── order_list.html
 │   │       └── order_detail.html
 │   │
-│   ├── 📂 payments/                # 💳 Payment Gateways
-│   │   ├── models.py               # Payment
-│   │   ├── views.py                # Payment page, Create, Verify, Webhook
-│   │   ├── razorpay_client.py      # Razorpay SDK wrapper
+│   ├── payments/                   # Payment processing
+│   │   ├── models.py               # Payment records
+│   │   ├── views.py                # Payment, verification, webhooks
+│   │   ├── razorpay_client.py      # Razorpay SDK integration
 │   │   ├── urls.py
 │   │   ├── admin.py
 │   │   ├── migrations/
-│   │   └── 📂 templates/payments/
+│   │   └── templates/payments/
 │   │       ├── payment_page.html
 │   │       ├── payment_success.html
 │   │       └── payment_error.html
 │   │
-│   ├── 📂 wishlist/                # ❤️ Wishlist
-│   │   ├── models.py               # Wishlist, WishlistItem
-│   │   ├── views.py                # List, Toggle, Remove
+│   ├── wishlist/                   # Wishlist management
+│   │   ├── models.py               # Wishlists and wishlist items
+│   │   ├── views.py                # List, toggle, remove
 │   │   ├── urls.py
-│   │   ├── context_processors.py   # Wishlist count (global)
+│   │   ├── context_processors.py   # Global wishlist count
 │   │   ├── migrations/
-│   │   └── 📂 templates/wishlist/
+│   │   └── templates/wishlist/
 │   │       └── wishlist.html
 │   │
-│   └── 📂 rag/                     # 🤖 AI Concierge
-│       ├── models.py               # KnowledgeBase, ChatSession, ChatMessage
-│       ├── views.py                # Chat view, Query handler
-│       ├── intent_engine.py        # 🧠 Intent detection (11+ intents)
-│       ├── llm_client.py           # 🔌 Multi-provider LLM (Groq/OpenRouter/Gemini)
-│       ├── rag_pipeline.py         # 🔍 RAG orchestration
-│       ├── vector_store.py         # 📊 FAISS vector index
+│   └── rag/                        # AI shopping assistant
+│       ├── models.py               # Knowledge base and chat history
+│       ├── views.py                # Chat interface and query handling
+│       ├── intent_engine.py        # User intent detection
+│       ├── llm_client.py           # Groq, OpenRouter, Gemini integration
+│       ├── rag_pipeline.py         # Retrieval-augmented generation
+│       ├── vector_store.py         # Vector database operations
 │       ├── urls.py
 │       ├── admin.py
 │       ├── migrations/
-│       └── 📂 templates/rag/
+│       └── templates/rag/
 │           └── chat.html
 │
-├── 📂 templates/                   # 🎨 Global Templates
-│   ├── base_luxury.html            # ⭐ Master template
+├── templates/                      # Shared HTML templates
+│   ├── base_luxury.html            # Main site layout
 │   ├── includes/
-│   │   └── ai_support_button.html  # 🎯 Floating AI widget
+│   │   └── ai_support_button.html  # Floating AI assistant widget
 │   ├── admin/
-│   │   └── index.html              # 🛡️ Custom dashboard
+│   │   └── index.html              # Custom admin dashboard
 │   └── errors/
 │       ├── 404.html
 │       └── 500.html
 │
-├── 📂 static/                      # 💅 Static Files
+├── static/                         # CSS, JavaScript, and images
 │   ├── css/
-│   │   └── admin_luxury.css        # Admin theme
+│   │   └── admin_luxury.css
 │   ├── js/
 │   │   └── admin_custom.js
 │   └── images/
 │
-├── 📂 media/                       # 📸 User Uploads (NOT in git)
+├── media/                          # Uploaded media (not committed)
 │   ├── products/
 │   ├── categories/
 │   ├── brands/
 │   ├── profiles/
 │   └── invoices/
 │
-├── 📂 scripts/                     # 🔧 Utility Scripts
-│   ├── seed_products.py            # Create 112 sample products
-│   ├── add_product_images.py       # Bulk image URLs
-│   ├── fix_product_images.py       # Repair image records
+├── scripts/                        # Data generation and maintenance
+│   ├── seed_products.py
+│   ├── add_product_images.py
+│   ├── fix_product_images.py
 │   └── generate_sample_data.py
 │
-├── 📂 locale/                      # 🌏 Translations
+├── locale/                         # Translation files
 │   ├── en/LC_MESSAGES/
 │   ├── hi/LC_MESSAGES/
 │   └── ta/LC_MESSAGES/
 │
-├── 📂 docs/                        # 📚 Documentation
+├── docs/                           # Project documentation
 │   ├── api.md
 │   ├── deployment.md
 │   └── architecture.md
 │
-├── 📂 logs/                        # 📝 Log Files (NOT in git)
+├── logs/                           # Application logs (not committed)
 │   ├── django.log
 │   └── celery.log
 │
-├── 📂 faiss_index/                 # 🧮 Vector Storage (NOT in git)
+├── faiss_index/                    # FAISS vector index (not committed)
 │   └── knowledge_base.index
 │
-└── 📂 nginx/                       # 🌐 Nginx Configuration
+└── nginx/                          # Web server configuration
     └── nginx.conf
+```
 -------------------------------------------------------------
 📸 Screenshots
 Homepage
