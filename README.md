@@ -333,7 +333,7 @@ bharatkart\_ecommerce/
 
 &#x20;   └── nginx.conf
 
-\------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 📸 Screenshots
 
@@ -480,8 +480,7 @@ git commit -m "docs: add comprehensive README"
 git push origin main
 
 The README is production-ready — it includes:
-
-\--------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 \## ✨ Key Features
 
@@ -632,10 +631,7 @@ The README is production-ready — it includes:
 | Dark luxury sections | Hero banners, CTAs |
 
 | Jazzmin admin | Custom themed admin panel |
-
-
-
-\-----------------------------------------------------------------------
+-----------------------------------------------------------------------
 
 \## 🏗️ Architecture
 
@@ -784,8 +780,7 @@ Webhook fires (background confirmation)
 
 
 Email/SMS sent to user
-
-\-------------------------------------------------------------
+-------------------------------------------------------------
 
 \### RAG Pipeline Flow
 
@@ -840,10 +835,7 @@ User Query: "Track my order ORD123ABC"
 │ Response with rich cards │
 
 └──────────────────────────────┘
-
-
-
-\--------------------------------------------------------------
+--------------------------------------------------------------
 
 🚀 Technologies Used
 
@@ -869,7 +861,7 @@ Custom CSS with 800+ lines of luxury styling
 
 Vanilla JavaScript for interactions
 
-\----------------------------------------------------------
+----------------------------------------------------------
 
 \## 🚀 Getting Started
 
