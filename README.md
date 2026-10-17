@@ -15,166 +15,165 @@
 - 🔒 **Production-Ready** — Docker, Celery, Redis, Nginx configs included
 
 ---------------------------------------------------------------------------------------------------
-## 📁 Project Structure
+📁 Project Structure
 
-bharatkart_ecommerce/
-│
-├── manage.py   # Django management script ├── requirements.txt                # Python dependencies
-├── .env                            # Environment variables (not committed)
-├── .env.example                    # Environment variable template
-├── .gitignore                      # Git ignore rules
-├── README.md                       # Project documentation
-├── Dockerfile                      # Docker image configuration
-├── docker-compose.yml              # Multi-service Docker configuration
-│
-├── ecommerce/                      # Django project configuration
-│   ├── __init__.py
-│   ├── settings.py                 # Project settings
-│   ├── urls.py                     # Root URL routing
-│   ├── wsgi.py                     # WSGI entry point
-│   ├── asgi.py                     # ASGI entry point
-│   ├── celery.py                   # Celery configuration
-│   └── middleware/
-│       ├── __init__.py
-│       └── request_logger.py       # Request logging middleware
-│
-├── apps/                           # Django applications
-│   │
-│   ├── accounts/                   # User and account management
-│   │   ├── models.py               # Users, addresses, wallets, sellers
-│   │   ├── views.py                # Authentication and user dashboards
-│   │   ├── urls.py
-│   │   ├── admin.py
-│   │   ├── context_processors.py   # Global wallet information
-│   │   ├── migrations/
-│   │   └── templates/accounts/
-│   │       ├── login.html
-│   │       ├── register.html
-│   │       ├── dashboard.html
-│   │       ├── wallet.html
-│   │       ├── transaction_history.html
-│   │       ├── my_orders.html
-│   │       ├── order_detail.html
-│   │       ├── profile.html
-│   │       └── addresses.html
-│   │
-│   ├── products/                   # Product catalog
-│   │   ├── models.py               # Categories, brands, products, variants
-│   │   ├── views.py                # Homepage, listing, product details
-│   │   ├── urls.py
-│   │   ├── admin.py
-│   │   ├── serializers.py          # REST API serializers
-│   │   ├── context_processors.py   # Global category information
-│   │   ├── migrations/
-│   │   └── templates/products/
-│   │       ├── home.html
-│   │       ├── product_list.html
-│   │       └── product_detail.html
-│   │
-│   ├── cart/                       # Shopping cart and checkout
-│   │   ├── models.py               # Cart and cart items
-│   │   ├── views.py                # Add, update, remove, checkout
-│   │   ├── urls.py
-│   │   ├── context_processors.py   # Global cart count
-│   │   ├── migrations/
-│   │   └── templates/cart/
-│   │       ├── cart_detail.html
-│   │       └── checkout.html
-│   │
-│   ├── orders/                     # Order management
-│   │   ├── models.py               # Orders and order items
-│   │   ├── views.py                # Order list, details, cancellation
-│   │   ├── urls.py
-│   │   ├── admin.py
-│   │   ├── migrations/
-│   │   └── templates/orders/
-│   │       ├── order_list.html
-│   │       └── order_detail.html
-│   │
-│   ├── payments/                   # Payment processing
-│   │   ├── models.py               # Payment records
-│   │   ├── views.py                # Payment, verification, webhooks
-│   │   ├── razorpay_client.py      # Razorpay SDK integration
-│   │   ├── urls.py
-│   │   ├── admin.py
-│   │   ├── migrations/
-│   │   └── templates/payments/
-│   │       ├── payment_page.html
-│   │       ├── payment_success.html
-│   │       └── payment_error.html
-│   │
-│   ├── wishlist/                   # Wishlist management
-│   │   ├── models.py               # Wishlists and wishlist items
-│   │   ├── views.py                # List, toggle, remove
-│   │   ├── urls.py
-│   │   ├── context_processors.py   # Global wishlist count
-│   │   ├── migrations/
-│   │   └── templates/wishlist/
-│   │       └── wishlist.html
-│   │
-│   └── rag/                        # AI shopping assistant
-│       ├── models.py               # Knowledge base and chat history
-│       ├── views.py                # Chat interface and query handling
-│       ├── intent_engine.py        # User intent detection
-│       ├── llm_client.py           # Groq, OpenRouter, Gemini integration
-│       ├── rag_pipeline.py         # Retrieval-augmented generation
-│       ├── vector_store.py         # Vector database operations
-│       ├── urls.py
-│       ├── admin.py
-│       ├── migrations/
-│       └── templates/rag/
-│           └── chat.html
-│
-├── templates/                      # Shared HTML templates
-│   ├── base_luxury.html            # Main site layout
-│   ├── includes/
-│   │   └── ai_support_button.html  # Floating AI assistant widget
-│   ├── admin/
-│   │   └── index.html              # Custom admin dashboard
-│   └── errors/
-│       ├── 404.html
-│       └── 500.html
-│
-├── static/                         # CSS, JavaScript, and images
-│   ├── css/
-│   │   └── admin_luxury.css
-│   ├── js/
-│   │   └── admin_custom.js
-│   └── images/
-│
-├── media/                          # Uploaded media (not committed)
-│   ├── products/
-│   ├── categories/
-│   ├── brands/
-│   ├── profiles/
-│   └── invoices/
-│
-├── scripts/                        # Data generation and maintenance
-│   ├── seed_products.py
-│   ├── add_product_images.py
-│   ├── fix_product_images.py
-│   └── generate_sample_data.py
-│
-├── locale/                         # Translation files
-│   ├── en/LC_MESSAGES/
-│   ├── hi/LC_MESSAGES/
-│   └── ta/LC_MESSAGES/
-│
-├── docs/                           # Project documentation
-│   ├── api.md
-│   ├── deployment.md
-│   └── architecture.md
-│
-├── logs/                           # Application logs (not committed)
-│   ├── django.log
-│   └── celery.log
-│
-├── faiss_index/                    # FAISS vector index (not committed)
-│   └── knowledge_base.index
-│
-└── nginx/                          # Web server configuration
-    └── nginx.conf
-```
+|
++-- manage.py                       # Django management script
++-- requirements.txt                # Python dependencies
++-- .env                            # Environment variables (not committed)
++-- .env.example                    # Environment variable template
++-- .gitignore                      # Git ignore rules
++-- README.md                       # Project documentation
++-- Dockerfile                      # Docker image configuration
++-- docker-compose.yml              # Multi-service Docker configuration
+|
++-- ecommerce/                      # Django project configuration
+|   +-- __init__.py
+|   +-- settings.py                 # Project settings
+|   +-- urls.py                     # Root URL routing
+|   +-- wsgi.py                     # WSGI entry point
+|   +-- asgi.py                     # ASGI entry point
+|   +-- celery.py                   # Celery configuration
+|   +-- middleware/
+|       +-- __init__.py
+|       +-- request_logger.py       # Request logging middleware
+|
++-- apps/                           # Django applications
+|   |
+|   +-- accounts/                   # User and account management
+|   |   +-- models.py               # Users, addresses, wallets, sellers
+|   |   +-- views.py                # Authentication and user dashboards
+|   |   +-- urls.py
+|   |   +-- admin.py
+|   |   +-- context_processors.py   # Global wallet information
+|   |   +-- migrations/
+|   |   +-- templates/accounts/
+|   |       +-- login.html
+|   |       +-- register.html
+|   |       +-- dashboard.html
+|   |       +-- wallet.html
+|   |       +-- transaction_history.html
+|   |       +-- my_orders.html
+|   |       +-- order_detail.html
+|   |       +-- profile.html
+|   |       +-- addresses.html
+|   |
+|   +-- products/                   # Product catalog
+|   |   +-- models.py               # Categories, brands, products, variants
+|   |   +-- views.py                # Homepage, listing, product details
+|   |   +-- urls.py
+|   |   +-- admin.py
+|   |   +-- serializers.py          # REST API serializers
+|   |   +-- context_processors.py   # Global category information
+|   |   +-- migrations/
+|   |   +-- templates/products/
+|   |       +-- home.html
+|   |       +-- product_list.html
+|   |       +-- product_detail.html
+|   |
+|   +-- cart/                       # Shopping cart and checkout
+|   |   +-- models.py               # Cart and cart items
+|   |   +-- views.py                # Add, update, remove, checkout
+|   |   +-- urls.py
+|   |   +-- context_processors.py   # Global cart count
+|   |   +-- migrations/
+|   |   +-- templates/cart/
+|   |       +-- cart_detail.html
+|   |       +-- checkout.html
+|   |
+|   +-- orders/                     # Order management
+|   |   +-- models.py               # Orders and order items
+|   |   +-- views.py                # Order list, details, cancellation
+|   |   +-- urls.py
+|   |   +-- admin.py
+|   |   +-- migrations/
+|   |   +-- templates/orders/
+|   |       +-- order_list.html
+|   |       +-- order_detail.html
+|   |
+|   +-- payments/                   # Payment processing
+|   |   +-- models.py               # Payment records
+|   |   +-- views.py                # Payment, verification, webhooks
+|   |   +-- razorpay_client.py      # Razorpay SDK integration
+|   |   +-- urls.py
+|   |   +-- admin.py
+|   |   +-- migrations/
+|   |   +-- templates/payments/
+|   |       +-- payment_page.html
+|   |       +-- payment_success.html
+|   |       +-- payment_error.html
+|   |
+|   +-- wishlist/                   # Wishlist management
+|   |   +-- models.py               # Wishlists and wishlist items
+|   |   +-- views.py                # List, toggle, remove
+|   |   +-- urls.py
+|   |   +-- context_processors.py   # Global wishlist count
+|   |   +-- migrations/
+|   |   +-- templates/wishlist/
+|   |       +-- wishlist.html
+|   |
+|   +-- rag/                        # AI shopping assistant
+|       +-- models.py               # Knowledge base and chat history
+|       +-- views.py                # Chat interface and query handling
+|       +-- intent_engine.py        # User intent detection
+|       +-- llm_client.py           # Groq, OpenRouter, Gemini integration
+|       +-- rag_pipeline.py         # Retrieval-augmented generation
+|       +-- vector_store.py         # Vector database operations
+|       +-- urls.py
+|       +-- admin.py
+|       +-- migrations/
+|       +-- templates/rag/
+|           +-- chat.html
+|
++-- templates/                      # Shared HTML templates
+|   +-- base_luxury.html            # Main site layout
+|   +-- includes/
+|   |   +-- ai_support_button.html  # Floating AI assistant widget
+|   +-- admin/
+|   |   +-- index.html              # Custom admin dashboard
+|   +-- errors/
+|       +-- 404.html
+|       +-- 500.html
+|
++-- static/                         # CSS, JavaScript, and images
+|   +-- css/
+|   |   +-- admin_luxury.css
+|   +-- js/
+|   |   +-- admin_custom.js
+|   +-- images/
+|
++-- media/                          # Uploaded media (not committed)
+|   +-- products/
+|   +-- categories/
+|   +-- brands/
+|   +-- profiles/
+|   +-- invoices/
+|
++-- scripts/                        # Data generation and maintenance
+|   +-- seed_products.py
+|   +-- add_product_images.py
+|   +-- fix_product_images.py
+|   +-- generate_sample_data.py
+|
++-- locale/                         # Translation files
+|   +-- en/LC_MESSAGES/
+|   +-- hi/LC_MESSAGES/
+|   +-- ta/LC_MESSAGES/
+|
++-- docs/                           # Project documentation
+|   +-- api.md
+|   +-- deployment.md
+|   +-- architecture.md
+|
++-- logs/                           # Application logs (not committed)
+|   +-- django.log
+|   +-- celery.log
+|
++-- faiss_index/                    # FAISS vector index (not committed)
+|   +-- knowledge_base.index
+|
++-- nginx/                          # Web server configuration
+    +-- nginx.conf
 -------------------------------------------------------------
 📸 Screenshots
 Homepage
@@ -513,9 +512,7 @@ python manage.py collectstatic --noinput
 Step 10: Run Server
 bash
 python manage.py runserver
-=======
 
-\## 🎯 Overview
 
 
 
