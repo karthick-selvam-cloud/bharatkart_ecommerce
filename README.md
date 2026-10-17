@@ -17,7 +17,7 @@
 ---------------------------------------------------------------------------------------------------
 ## 📁 Project Structure
 
-bharatkart\_ecommerce/
+bharatkart_ecommerce
 
 │
 
