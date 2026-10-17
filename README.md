@@ -330,8 +330,7 @@ bharatkart_ecommerce
 │
 
 └── nginx/                          # Web server configuration
-
-&#x20;   └── nginx.conf
+   └── nginx.conf
 
 ------------------------------------------------------------------------------
 
