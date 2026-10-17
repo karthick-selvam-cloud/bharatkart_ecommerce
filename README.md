@@ -21,7 +21,7 @@ bharatkart_ecommerce
 
 │
 
-├── manage.py                      # Django management script
+── manage.py                      # Django management script
 
 ├── requirements.txt                # Python dependencies
 
