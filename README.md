@@ -329,7 +329,7 @@ bharatkart_ecommerce
 
 │
 
-└── nginx                        # Web server configuration
+└── nginx                        # Web server configuration\
    └── nginx.conf
 
 ------------------------------------------------------------------------------
