@@ -336,7 +336,7 @@ bharatkart_ecommerce
 
 📸 Screenshots
 
-Homepage
+:Homepage
 
 Luxury gold/charcoal hero section with featured products.
 
