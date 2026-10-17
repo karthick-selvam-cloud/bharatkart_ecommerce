@@ -413,7 +413,7 @@ Sentence Transformers — State-of-the-art embeddings
 
 -------------------------------------------------------
 
-AI Services:
+✅ AI Services:
 
 Groq — Lightning-fast LLM inference
 
